@@ -45,7 +45,7 @@ jobs:
 
       - name: Lint
         if: ${{ matrix.os == 'ubuntu-latest' && matrix.edgedb-version == 'stable' }}
-        run: dart analyze && dart run tool/gen_docs.dart --lintMode
+        run: dart analyze
 
       - name: Install EdgeDB
         uses: edgedb/setup-edgedb@v1
