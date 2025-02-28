@@ -1062,7 +1062,7 @@ void main() {
 
     try {
       await client
-          .withRetryOptions(RetryOptions(attempts: 1))
+          .withRetryOptions(RetryOptions(attempts: 10))
           .transaction((tx) async {
         await tx.execute('CREATE SCALAR TYPE MyEnum EXTENDING enum<"A", "B">;');
 
@@ -1165,7 +1165,7 @@ void main() {
 
     try {
       await client
-          .withRetryOptions(RetryOptions(attempts: 1))
+          .withRetryOptions(RetryOptions(attempts: 10))
           .transaction((tx) async {
         await tx.execute('create extension pgvector');
 
@@ -1326,7 +1326,9 @@ void main() {
   test("scripts and args", () async {
     final client = getClient();
 
-    await client.execute('''create type ScriptTest {
+    await client
+        .withRetryOptions(RetryOptions(attempts: 10))
+        .execute('''create type ScriptTest {
     create property name -> str;
   };''');
 
@@ -1394,7 +1396,9 @@ void main() {
     final client = getClient();
 
     try {
-      await client.transaction((tx) async {
+      await client
+          .withRetryOptions(RetryOptions(attempts: 10))
+          .transaction((tx) async {
         await tx.execute('''
         CREATE TYPE $typename {
           CREATE REQUIRED PROPERTY prop1 -> std::str;

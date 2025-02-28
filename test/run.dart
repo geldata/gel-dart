@@ -22,17 +22,13 @@ void main(List<String> testArgs) async {
 
   final version = await adminConn.querySingle('select sys::get_version()');
 
-  final testProc = await Process.start('dart', [
-    'test',
-    if (Platform.environment['GITHUB_ACTIONS'] != 'true') '--reporter=expanded',
-    ...testArgs
-  ], environment: {
-    '_DART_GEL_CONNECT_CONFIG': jsonEncode(server.config),
-    '_DART_GEL_VERSION': jsonEncode([version['major'], version['minor']])
-  });
-
-  testProc.stdout.listen((event) => stdout.add(event));
-  testProc.stderr.listen((event) => stderr.add(event));
+  final testProc = await Process.start(
+      'dart', ['test', '--test-randomize-ordering-seed=random', ...testArgs],
+      environment: {
+        '_DART_GEL_CONNECT_CONFIG': jsonEncode(server.config),
+        '_DART_GEL_VERSION': jsonEncode([version['major'], version['minor']])
+      },
+      mode: ProcessStartMode.inheritStdio);
 
   exitCode = await testProc.exitCode;
 
