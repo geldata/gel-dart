@@ -1,7 +1,7 @@
 /*!
- * This source file is part of the EdgeDB open source project.
+ * This source file is part of the Gel open source project.
  *
- * Copyright 2019-present MagicStack Inc. and the EdgeDB authors.
+ * Copyright 2019-present MagicStack Inc. and the Gel authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,10 +19,10 @@
 import 'errors.dart';
 import 'map.dart';
 
-EdgeDBError Function(String) resolveErrorCode(int code) {
+GelError Function(String) resolveErrorCode(int code) {
   return errorMapping[code] ??
       errorMapping[code & 0xffffff00] ??
       errorMapping[code & 0xffff0000] ??
       errorMapping[code & 0xff000000] ??
-      EdgeDBError.new;
+      GelError.new;
 }

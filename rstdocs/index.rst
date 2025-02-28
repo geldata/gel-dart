@@ -1,7 +1,7 @@
-.. _edgedb-dart-intro:
+.. _gel-dart-intro:
 
-Dart client library for EdgeDB
-==============================
+Dart client library for Gel
+===========================
 
 .. toctree::
   :maxdepth: 3
@@ -13,30 +13,30 @@ Dart client library for EdgeDB
   codegen
 
 
-This is the official `EdgeDB <https://github.com/edgedb/edgedb>`__ client library
+This is the official `Gel <https://github.com/geldata/gel>`__ (formerly EdgeDB) client library
 for Dart.
 
-If you're just getting started with EdgeDB, we recommend going through the
-:ref:`EdgeDB Quickstart <ref_quickstart>` first. This walks
-you through the process of installing EdgeDB, creating a simple schema, and
+If you're just getting started with Gel, we recommend going through the
+`Gel Quickstart <https://www.geldata.com/p/quickstart-docs>`__ first. This walks
+you through the process of installing Gel, creating a simple schema, and
 writing some simple queries.
 
 .. note::
     
-    Only EdgeDB version >=2.0 is supported by this library.
+    Only Gel version >=2.0 is supported by this library.
     
     
 Installing
 ----------
 
-Add ``edgedb`` to the dependencies in your ``pubspec.yaml`` file:
+Add ``gel`` to the dependencies in your ``pubspec.yaml`` file:
 
 .. code-block:: sh
 
-    dart pub add edgedb
+    dart pub add gel
     
-This package contains both the core ``edgedb`` library, which exports all the
-API's needed to connect to an EdgeDB server and run queries, along with the
+This package contains both the core ``gel`` library, which exports all the
+API's needed to connect to a Gel server and run queries, along with the
 ``edgeql-codegen`` library, which provides a builder for Dart's
 `build_runner <https://dart.dev/tools/build_runner>`__ to generate fully
 typed query methods from ``.edgeql`` files.
@@ -44,21 +44,21 @@ typed query methods from ``.edgeql`` files.
 Basic Usage
 -----------
 
-First you'll need to have EdgeDB installed, and to have created an instance for
-your project; we recommend the :ref:`Quickstart guide <ref_quickstart>`
+First you'll need to have Gel installed, and to have created an instance for
+your project; we recommend the `Quickstart guide <https://www.geldata.com/p/quickstart-docs>`__
 for a overview on how to do this.
 
-Then import the ``edgedb`` library, and create a new client with ``createClient()``.
+Then import the ``gel`` library, and create a new client with ``createClient()``.
 
 .. code-block:: dart
 
-    import 'package:edgedb/edgedb.dart';
+    import 'package:gel/gel.dart';
     
     final client = createClient();
     
 In most cases ``createClient()`` needs no arguments; the library will determine
-how to connect to your instance automatically if you're either: using an
-EdgeDB project, as recommended for development, or providing connection
+how to connect to your instance automatically if you're either: using a
+Gel project, as recommended for development, or providing connection
 options via environment variables, as recommended for production use. For
 more advanced use cases refer to the ``createClient()`` api docs, for the full
 list of connection options you can provide.

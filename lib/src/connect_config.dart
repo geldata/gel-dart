@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
-import 'package:edgedb/src/utils/crc_hqx.dart';
+import 'package:gel/src/utils/crc_hqx.dart';
 import 'package:path/path.dart';
 
 import 'credentials.dart';
@@ -451,7 +451,8 @@ Future<String?> findProjectDir() async {
   var dir = workingDir;
   // TODO: stop searching at device boundary
   while (true) {
-    if (await File(join(dir.path, 'edgedb.toml')).exists()) {
+    if (await File(join(dir.path, 'gel.toml')).exists() ||
+        await File(join(dir.path, 'edgedb.toml')).exists()) {
       projectDirCache[workingDir.path] = dir.path;
       return dir.path;
     }
@@ -611,8 +612,8 @@ Future<ResolvedConnectConfig> parseConnectConfig(ConnectConfig config) async {
     final projectDir = await findProjectDir();
     if (projectDir == null) {
       throw ClientConnectionError(
-          "no 'edgedb.toml' found and no connection options specified"
-          " either via arguments to `connect()` API or via environment"
+          "no 'gel.toml' (or 'edgedb.toml') found and no connection options"
+          " specified either via arguments to `connect()` API or via environment"
           " variables GEL_HOST, GEL_INSTANCE, GEL_DSN, "
           "GEL_CREDENTIALS or GEL_CREDENTIALS_FILE");
     }
@@ -640,7 +641,7 @@ Future<ResolvedConnectConfig> parseConnectConfig(ConnectConfig config) async {
           database: SourcedValue(database, "project default database"));
     } else {
       throw ClientConnectionError(
-          "Found 'edgedb.toml' but the project is not initialized. "
+          "Found 'gel.toml' (or 'edgedb.toml') but the project is not initialized. "
           "Run `gel project init`.");
     }
   }
@@ -991,7 +992,7 @@ Future<void> parseCloudInstanceNameIntoConfig(ResolvedConnectConfig config,
     final host = "$domainName.c-$dnsBucket.i.$dnsZone";
     config.setHost(SourcedValue(
         host, "resolved from 'secretKey' and ${cloudInstanceName.source}"));
-  } on EdgeDBError {
+  } on GelError {
     rethrow;
   } catch (e) {
     throw InterfaceError('Invalid secret key: $e');

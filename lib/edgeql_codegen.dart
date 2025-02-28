@@ -56,7 +56,7 @@
 /// ```
 ///
 /// ```dart
-/// import 'package:edgedb/edgedb.dart';
+/// import 'package:gel/gel.dart';
 /// import 'getUserByName.edgeql.dart';
 ///
 /// // ...
@@ -72,14 +72,14 @@ import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:pub_semver/pub_semver.dart';
-import 'package:edgedb/src/base_proto.dart';
-import 'package:edgedb/src/client.dart';
-import 'package:edgedb/src/codecs/codecs.dart';
-import 'package:edgedb/src/connect_config.dart';
-import 'package:edgedb/src/errors/base.dart';
-import 'package:edgedb/src/options.dart';
-import 'package:edgedb/src/primitives/types.dart';
-import 'package:edgedb/src/tcp_proto.dart';
+import 'package:gel/src/base_proto.dart';
+import 'package:gel/src/client.dart';
+import 'package:gel/src/codecs/codecs.dart';
+import 'package:gel/src/connect_config.dart';
+import 'package:gel/src/errors/base.dart';
+import 'package:gel/src/options.dart';
+import 'package:gel/src/primitives/types.dart';
+import 'package:gel/src/tcp_proto.dart';
 import 'package:path/path.dart';
 
 Builder edgeqlCodegenBuilder(BuilderOptions options) =>
@@ -145,7 +145,7 @@ class EdgeqlCodegenBuilder implements Builder {
 
     if (parseResult.inCodec is! ObjectCodec &&
         parseResult.inCodec is! NullCodec) {
-      throw EdgeDBError(
+      throw GelError(
           'expected inCodec to be ObjectCodec or NullCodec, got ${parseResult.inCodec.runtimeType}');
     }
     final ObjectCodec? inCodec = parseResult.inCodec is ObjectCodec
@@ -165,7 +165,7 @@ class EdgeqlCodegenBuilder implements Builder {
 
     file.body.add(Extension((builder) => builder
       ..name = '${typeName}Extension'
-      ..on = Reference('Executor', 'package:edgedb/src/client.dart')
+      ..on = Reference('Executor', 'package:gel/src/client.dart')
       ..methods.add(Method((builder) {
         builder
           ..name = fileName
@@ -196,38 +196,36 @@ class EdgeqlCodegenBuilder implements Builder {
         }
         builder
           ..modifier = MethodModifier.async
-          ..body =
-              Reference('executeWithCodec', 'package:edgedb/src/client.dart')
-                  .call([
-                    Reference('this'),
-                    literalString(fileName),
-                    Reference('_outCodec'),
-                    inCodec != null
-                        ? Reference('_inCodec')
-                        : Reference('nullCodec',
-                            'package:edgedb/src/codecs/codecs.dart'),
-                    Reference('Cardinality',
-                            'package:edgedb/src/primitives/types.dart')
-                        .property(parseResult.cardinality.name),
-                    Reference('_query'),
-                    inCodec != null
-                        ? (namedArgs
-                            ? literalMap({
-                                for (var field in inCodec.fields)
-                                  literalString(field.name):
-                                      Reference(field.name)
-                              }, Reference('String'), Reference('dynamic'))
-                            : literalList([
-                                for (var field in inCodec.fields)
-                                  Reference('\$${field.name}')
-                              ], Reference('dynamic')))
-                        : literalNull
-                  ], {}, [
-                    returnType.typeRef
-                  ])
-                  .awaited
-                  .returned
-                  .statement;
+          ..body = Reference('executeWithCodec', 'package:gel/src/client.dart')
+              .call([
+                Reference('this'),
+                literalString(fileName),
+                Reference('_outCodec'),
+                inCodec != null
+                    ? Reference('_inCodec')
+                    : Reference(
+                        'nullCodec', 'package:gel/src/codecs/codecs.dart'),
+                Reference(
+                        'Cardinality', 'package:gel/src/primitives/types.dart')
+                    .property(parseResult.cardinality.name),
+                Reference('_query'),
+                inCodec != null
+                    ? (namedArgs
+                        ? literalMap({
+                            for (var field in inCodec.fields)
+                              literalString(field.name): Reference(field.name)
+                          }, Reference('String'), Reference('dynamic'))
+                        : literalList([
+                            for (var field in inCodec.fields)
+                              Reference('\$${field.name}')
+                          ], Reference('dynamic')))
+                    : literalNull
+              ], {}, [
+                returnType.typeRef
+              ])
+              .awaited
+              .returned
+              .statement;
       }))));
 
     final generatedCode = DartFormatter(languageVersion: Version(3, 6, 0))
@@ -267,17 +265,17 @@ _WalkCodecReturn _walkCodec(Codec codec, LibraryBuilder file,
               ? codec.returnTypeImport
               : null),
         codec is EnumCodec
-            ? Reference('EnumCodec', 'package:edgedb/src/codecs/codecs.dart')
+            ? Reference('EnumCodec', 'package:gel/src/codecs/codecs.dart')
                 .newInstance([literalString(codec.tid), literalNull])
-            : Reference('scalarCodecs', 'package:edgedb/src/codecs/codecs.dart')
+            : Reference('scalarCodecs', 'package:gel/src/codecs/codecs.dart')
                 .index(literalString(codec.tid))
                 .nullChecked);
   }
   if (codec is ObjectCodec || codec is NamedTupleCodec) {
     final typeClass = ClassBuilder()..name = typeName;
     if (codec is NamedTupleCodec) {
-      typeClass.extend = Reference(
-          'EdgeDBNamedTuple', 'package:edgedb/src/codecs/codecs.dart');
+      typeClass.extend =
+          Reference('GelNamedTuple', 'package:gel/src/codecs/codecs.dart');
     }
     final typeMapConstructor = isArgsCodec
         ? null
@@ -352,7 +350,7 @@ _WalkCodecReturn _walkCodec(Codec codec, LibraryBuilder file,
     return _WalkCodecReturn(
         TypeReference((ref) => ref..symbol = typeName),
         Reference(codec is ObjectCodec ? 'ObjectCodec' : 'NamedTupleCodec',
-                'package:edgedb/src/codecs/codecs.dart')
+                'package:gel/src/codecs/codecs.dart')
             .newInstance([
           literalString(codec.tid),
           if (codec is NamedTupleCodec)
@@ -381,7 +379,7 @@ _WalkCodecReturn _walkCodec(Codec codec, LibraryBuilder file,
     return _WalkCodecReturn(
         TypeReference((builder) => builder
           ..symbol = (codec is RangeCodec)
-              ? Reference('Range', 'package:edgedb/edgedb.dart').symbol
+              ? Reference('Range', 'package:gel/gel.dart').symbol
               : 'List'
           ..types.add(child.typeRef)),
         Reference(
@@ -390,7 +388,7 @@ _WalkCodecReturn _walkCodec(Codec codec, LibraryBuilder file,
                     : codec is ArrayCodec
                         ? 'ArrayCodec'
                         : 'RangeCodec',
-                'package:edgedb/src/codecs/codecs.dart')
+                'package:gel/src/codecs/codecs.dart')
             .newInstance([
           literalString(codec.tid),
           if (codec is ArrayCodec)
@@ -410,8 +408,7 @@ _WalkCodecReturn _walkCodec(Codec codec, LibraryBuilder file,
   if (codec is TupleCodec) {
     final typeClass = ClassBuilder()
       ..name = typeName
-      ..extend =
-          Reference('EdgeDBTuple', 'package:edgedb/src/codecs/codecs.dart');
+      ..extend = Reference('GelTuple', 'package:gel/src/codecs/codecs.dart');
     final typeListConstructor = isArgsCodec
         ? null
         : (ConstructorBuilder()
@@ -455,7 +452,7 @@ _WalkCodecReturn _walkCodec(Codec codec, LibraryBuilder file,
     file.body.add(typeClass.build());
     return _WalkCodecReturn(
         TypeReference((ref) => ref..symbol = typeName),
-        Reference('TupleCodec', 'package:edgedb/src/codecs/codecs.dart')
+        Reference('TupleCodec', 'package:gel/src/codecs/codecs.dart')
             .newInstance([
           literalString(codec.tid),
           codec.typeName != null ? literalString(codec.typeName!) : literalNull,
@@ -465,7 +462,7 @@ _WalkCodecReturn _walkCodec(Codec codec, LibraryBuilder file,
             'returnType': Reference(typeName).property('_fromList')
         }));
   }
-  throw EdgeDBError('cannot generate type for codec ${codec.runtimeType}');
+  throw GelError('cannot generate type for codec ${codec.runtimeType}');
 }
 
 ClientPool? _connPool;

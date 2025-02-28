@@ -5,14 +5,14 @@ Datatypes
 :edb-alt-title: Custom Datatypes
 
 
-.. _edgedb-dart-Range:
+.. _gel-dart-Range:
 
 *class* Range
 -------------
 
 Represents an interval between values.
 
-The ``Range`` type behaves the same as the EdgeDB ``range`` type.
+The ``Range`` type behaves the same as the Gel ``range`` type.
 Ranges can have a lower and upper boundary, which can be inclusive or
 exclusive, or omitted completely (``null``). By default, the lower boundary
 is inclusive, and the upper boundary exclusive.
@@ -30,7 +30,7 @@ either by the ``Range.empty()`` constructor, creating a range where the lower
 and upper boundaries are equal, and at least one boundary is exclusive, or
 as the result of some operation on a range.
 
-.. _edgedb-dart-Range-Range:
+.. _gel-dart-Range-Range:
 
 *constructor* ``Range<T>()``
 ............................
@@ -45,12 +45,12 @@ as the result of some operation on a range.
       bool? incUpper, }
     )
 
-Creates a new :ref:`Range <edgedb-dart-Range>`.
+Creates a new :ref:`Range <gel-dart-Range>`.
 
 If not given, ``incLower`` and ``incUpper`` default to ``true`` and ``false``
 respectively.
 
-.. _edgedb-dart-Range-Range.empty:
+.. _gel-dart-Range-Range.empty:
 
 *constructor* ``Range<T>.empty()``
 ..................................
@@ -60,9 +60,9 @@ respectively.
 
     Range<T>.empty()
 
-Creates a new empty :ref:`Range <edgedb-dart-Range>` of type ``T``.
+Creates a new empty :ref:`Range <gel-dart-Range>` of type ``T``.
 
-.. _edgedb-dart-Range-hashCode:
+.. _gel-dart-Range-hashCode:
 
 *property* ``.hashCode``
 ........................
@@ -74,7 +74,7 @@ Creates a new empty :ref:`Range <edgedb-dart-Range>` of type ``T``.
 
 The hash code for this object.
 
-.. _edgedb-dart-Range-incLower:
+.. _gel-dart-Range-incLower:
 
 *property* ``.incLower``
 ........................
@@ -87,7 +87,7 @@ The hash code for this object.
 Whether the lower boundary is inclusive. Is always ``false`` for unspecified
 boundaries and empty ranges.
 
-.. _edgedb-dart-Range-incUpper:
+.. _gel-dart-Range-incUpper:
 
 *property* ``.incUpper``
 ........................
@@ -100,7 +100,7 @@ boundaries and empty ranges.
 Whether the upper boundary is inclusive. Is always ``false`` for unspecified
 boundaries and empty ranges.
 
-.. _edgedb-dart-Range-isEmpty:
+.. _gel-dart-Range-isEmpty:
 
 *property* ``.isEmpty``
 .......................
@@ -112,7 +112,7 @@ boundaries and empty ranges.
 
 Whether the range is empty.
 
-.. _edgedb-dart-Range-lower:
+.. _gel-dart-Range-lower:
 
 *property* ``.lower``
 .....................
@@ -124,7 +124,7 @@ Whether the range is empty.
 
 The lower boundary of the range, if it exists.
 
-.. _edgedb-dart-Range-upper:
+.. _gel-dart-Range-upper:
 
 *property* ``.upper``
 .....................
@@ -136,7 +136,7 @@ The lower boundary of the range, if it exists.
 
 The upper boundary of the range, if it exists.
 
-.. _edgedb-dart-Range-compareTo:
+.. _gel-dart-Range-compareTo:
 
 *method* ``.compareTo()``
 .........................
@@ -150,14 +150,14 @@ The upper boundary of the range, if it exists.
 
 Compares this object to another object.
 
-Returns a value like a `Comparator <https://api.dart.dev/stable/3.6.1/dart-core/Comparator.html>`__ when comparing ``this`` to ``other``.
+Returns a value like a `Comparator <https://api.dart.dev/stable/3.7.1/dart-core/Comparator.html>`__ when comparing ``this`` to ``other``.
 That is, it returns a negative integer if ``this`` is ordered before ``other``,
 a positive integer if ``this`` is ordered after ``other``,
 and zero if ``this`` and ``other`` are ordered together.
 
 The ``other`` argument must be a value that is comparable to this object.
 
-.. _edgedb-dart-Range-contains:
+.. _gel-dart-Range-contains:
 
 *method* ``.contains()``
 ........................
@@ -171,7 +171,7 @@ The ``other`` argument must be a value that is comparable to this object.
 
 Checks whether ``element`` is within this range.
 
-.. _edgedb-dart-Range-containsRange:
+.. _gel-dart-Range-containsRange:
 
 *method* ``.containsRange()``
 .............................
@@ -185,7 +185,7 @@ Checks whether ``element`` is within this range.
 
 Checks whether ``range`` is entirely within this range.
 
-.. _edgedb-dart-Range-overlaps:
+.. _gel-dart-Range-overlaps:
 
 *method* ``.overlaps()``
 ........................
@@ -199,7 +199,7 @@ Checks whether ``range`` is entirely within this range.
 
 Checks whether ``other`` range overlaps this range.
 
-.. _edgedb-dart-Range-toJSON:
+.. _gel-dart-Range-toJSON:
 
 *method* ``.toJSON()``
 ......................
@@ -210,7 +210,7 @@ Checks whether ``other`` range overlaps this range.
     dynamic toJSON()
 
 
-.. _edgedb-dart-Range-toString:
+.. _gel-dart-Range-toString:
 
 *method* ``.toString()``
 ........................
@@ -225,7 +225,7 @@ String representation of the range.
 Inclusive boundaries are denoted by ``[]`` brackets, and exclusive
 boundaries by ``()``. If the range is empty, returns the string ``'empty'``.
 
-.. _edgedb-dart-Range-unpack:
+.. _gel-dart-Range-unpack:
 
 *method* ``.unpack()``
 ......................
@@ -246,7 +246,7 @@ An error is thrown if the range is unbounded (ie. either ``lower`` or
 ``upper`` are ``null``), or the ``step`` parameter is not given for
 non-discrete ranges.
 
-.. _edgedb-dart-Range-operator_multiply:
+.. _gel-dart-Range-operator_multiply:
 
 *operator* ``\*``
 .................
@@ -260,7 +260,7 @@ non-discrete ranges.
 
 Returns the intersection of two ranges.
 
-.. _edgedb-dart-Range-operator_plus:
+.. _gel-dart-Range-operator_plus:
 
 *operator* ``+``
 ................
@@ -276,7 +276,7 @@ Returns the union of two ranges.
 
 Throws an error if the result is not a single continuous range.
 
-.. _edgedb-dart-Range-operator_minus:
+.. _gel-dart-Range-operator_minus:
 
 *operator* ``-``
 ................
@@ -292,7 +292,7 @@ Subtracts one range from another.
 
 Throws an error if the result is not a single continuous range.
 
-.. _edgedb-dart-Range-operator_less:
+.. _gel-dart-Range-operator_less:
 
 *operator* ``<``
 ................
@@ -312,7 +312,7 @@ upper bounds are checked. An empty range is considered lower than a
 non-empty range, and unspecified lower/upper bounds are considered
 lower/greater than specified lower/upper bounds respectively.
 
-.. _edgedb-dart-Range-operator_less_equal:
+.. _gel-dart-Range-operator_less_equal:
 
 *operator* ``<=``
 .................
@@ -332,7 +332,7 @@ upper bounds are checked. An empty range is considered lower than a
 non-empty range, and unspecified lower/upper bounds are considered
 lower/greater than specified lower/upper bounds respectively.
 
-.. _edgedb-dart-Range-operator_equals:
+.. _gel-dart-Range-operator_equals:
 
 *operator* ``==``
 .................
@@ -346,7 +346,7 @@ lower/greater than specified lower/upper bounds respectively.
 
 Returns whether two ranges are equal.
 
-.. _edgedb-dart-Range-operator_greater:
+.. _gel-dart-Range-operator_greater:
 
 *operator* ``>``
 ................
@@ -366,7 +366,7 @@ upper bounds are checked. An empty range is considered lower than a
 non-empty range, and unspecified lower/upper bounds are considered
 lower/greater than specified lower/upper bounds respectively.
 
-.. _edgedb-dart-Range-operator_greater_equal:
+.. _gel-dart-Range-operator_greater_equal:
 
 *operator* ``>=``
 .................
@@ -386,12 +386,12 @@ upper bounds are checked. An empty range is considered lower than a
 non-empty range, and unspecified lower/upper bounds are considered
 lower/greater than specified lower/upper bounds respectively.
 
-.. _edgedb-dart-MultiRange:
+.. _gel-dart-MultiRange:
 
 *class* MultiRange
 ------------------
 
-.. _edgedb-dart-MultiRange-MultiRange:
+.. _gel-dart-MultiRange-MultiRange:
 
 *constructor* ``MultiRange<T>()``
 .................................
@@ -404,7 +404,7 @@ lower/greater than specified lower/upper bounds respectively.
     )
 
 
-.. _edgedb-dart-MultiRange-hashCode:
+.. _gel-dart-MultiRange-hashCode:
 
 *property* ``.hashCode``
 ........................
@@ -416,7 +416,7 @@ lower/greater than specified lower/upper bounds respectively.
 
 The hash code for this object.
 
-.. _edgedb-dart-MultiRange-iterator:
+.. _gel-dart-MultiRange-iterator:
 
 *property* ``.iterator``
 ........................
@@ -431,7 +431,7 @@ An iterator that iterates over the elements of this set.
 The order of iteration is defined by the individual ``Set`` implementation,
 but must be consistent between changes to the set.
 
-.. _edgedb-dart-MultiRange-length:
+.. _gel-dart-MultiRange-length:
 
 *property* ``.length``
 ......................
@@ -441,14 +441,14 @@ but must be consistent between changes to the set.
 
     int get length
 
-The number of elements in this `Iterable <https://api.dart.dev/stable/3.6.1/dart-core/Iterable-class.html>`__.
+The number of elements in this `Iterable <https://api.dart.dev/stable/3.7.1/dart-core/Iterable-class.html>`__.
 
 Counting all elements may involve iterating through all elements and can
 therefore be slow.
 Some iterables have a more efficient way to find the number of elements.
 These *must* override the default implementation of ``length``.
 
-.. _edgedb-dart-MultiRange-add:
+.. _gel-dart-MultiRange-add:
 
 *method* ``.add()``
 ...................
@@ -487,7 +487,7 @@ Example:
     assert(identical(time1, dateTimes.first));
     print(dateTimes.length);
     
-.. _edgedb-dart-MultiRange-contains:
+.. _gel-dart-MultiRange-contains:
 
 *method* ``.contains()``
 ........................
@@ -507,7 +507,7 @@ Whether ``value`` is in the set.
     final containsB = characters.contains('B'); // true
     final containsD = characters.contains('D'); // false
     
-.. _edgedb-dart-MultiRange-lookup:
+.. _gel-dart-MultiRange-lookup:
 
 *method* ``.lookup()``
 ......................
@@ -521,13 +521,13 @@ Whether ``value`` is in the set.
 
 If an object equal to ``object`` is in the set, return it.
 
-Checks whether ``object`` is in the set, like :ref:`contains <edgedb-dart-MultiRange-contains>`, and if so,
+Checks whether ``object`` is in the set, like :ref:`contains <gel-dart-MultiRange-contains>`, and if so,
 returns the object in the set, otherwise returns ``null``.
 
 If the equality relation used by the set is not identity,
 then the returned object may not be *identical* to ``object``.
 Some set implementations may not be able to implement this method.
-If the :ref:`contains <edgedb-dart-MultiRange-contains>` method is computed,
+If the :ref:`contains <gel-dart-MultiRange-contains>` method is computed,
 rather than being based on an actual object instance,
 then there may not be a specific object instance representing the
 set element.
@@ -540,7 +540,7 @@ set element.
     final containsD = characters.lookup('D');
     print(containsD); // null
     
-.. _edgedb-dart-MultiRange-remove:
+.. _gel-dart-MultiRange-remove:
 
 *method* ``.remove()``
 ......................
@@ -564,7 +564,7 @@ The method has no effect if ``value`` was not in the set.
     final didRemoveD = characters.remove('D'); // false
     print(characters); // {A, C}
     
-.. _edgedb-dart-MultiRange-toJSON:
+.. _gel-dart-MultiRange-toJSON:
 
 *method* ``.toJSON()``
 ......................
@@ -575,7 +575,7 @@ The method has no effect if ``value`` was not in the set.
     dynamic toJSON()
 
 
-.. _edgedb-dart-MultiRange-toSet:
+.. _gel-dart-MultiRange-toSet:
 
 *method* ``.toSet()``
 .....................
@@ -585,7 +585,7 @@ The method has no effect if ``value`` was not in the set.
 
     Set<Range<T>> toSet()
 
-Creates a `Set <https://api.dart.dev/stable/3.6.1/dart-core/Set-class.html>`__ with the same elements and behavior as this ``Set``.
+Creates a `Set <https://api.dart.dev/stable/3.7.1/dart-core/Set-class.html>`__ with the same elements and behavior as this ``Set``.
 
 The returned set behaves the same as this set
 with regard to adding and removing elements.
@@ -593,7 +593,7 @@ It initially contains the same elements.
 If this set specifies an ordering of the elements,
 the returned set will have the same order.
 
-.. _edgedb-dart-MultiRange-toString:
+.. _gel-dart-MultiRange-toString:
 
 *method* ``.toString()``
 ........................
@@ -606,7 +606,7 @@ the returned set will have the same order.
 A string representation of this object.
 
 Some classes have a default textual representation,
-often paired with a static ``parse`` function (like `int.parse <https://api.dart.dev/stable/3.6.1/dart-core/int/parse.html>`__).
+often paired with a static ``parse`` function (like `int.parse <https://api.dart.dev/stable/3.7.1/dart-core/int/parse.html>`__).
 These classes will provide the textual representation as
 their string representation.
 
@@ -616,7 +616,7 @@ Such classes will typically override ``toString`` to provide
 useful information when inspecting the object,
 mainly for debugging or logging.
 
-.. _edgedb-dart-MultiRange-operator_equals:
+.. _gel-dart-MultiRange-operator_equals:
 
 *operator* ``==``
 .................
@@ -630,7 +630,7 @@ mainly for debugging or logging.
 
 Returns whether two multiranges are equal.
 
-.. _edgedb-dart-ConfigMemory:
+.. _gel-dart-ConfigMemory:
 
 *class* ConfigMemory
 --------------------
@@ -640,7 +640,7 @@ Represents an amount of memory in bytes.
 Uses the base-2 ``KiB`` notation (1024 bytes), instead of the more
 ambiguous 'kB', which can mean 1000 or 1024 bytes.
 
-.. _edgedb-dart-ConfigMemory-ConfigMemory:
+.. _gel-dart-ConfigMemory-ConfigMemory:
 
 *constructor* ``ConfigMemory()``
 ................................
@@ -653,7 +653,7 @@ ambiguous 'kB', which can mean 1000 or 1024 bytes.
     )
 
 
-.. _edgedb-dart-ConfigMemory-ConfigMemory.parse:
+.. _gel-dart-ConfigMemory-ConfigMemory.parse:
 
 *constructor* ``ConfigMemory.parse()``
 ......................................
@@ -666,7 +666,7 @@ ambiguous 'kB', which can mean 1000 or 1024 bytes.
     )
 
 
-.. _edgedb-dart-ConfigMemory-bytes:
+.. _gel-dart-ConfigMemory-bytes:
 
 *property* ``.bytes``
 .....................
@@ -677,7 +677,7 @@ ambiguous 'kB', which can mean 1000 or 1024 bytes.
     int get bytes
 
 
-.. _edgedb-dart-ConfigMemory-gibibytes:
+.. _gel-dart-ConfigMemory-gibibytes:
 
 *property* ``.gibibytes``
 .........................
@@ -688,7 +688,7 @@ ambiguous 'kB', which can mean 1000 or 1024 bytes.
     num get gibibytes
 
 
-.. _edgedb-dart-ConfigMemory-kibibytes:
+.. _gel-dart-ConfigMemory-kibibytes:
 
 *property* ``.kibibytes``
 .........................
@@ -699,7 +699,7 @@ ambiguous 'kB', which can mean 1000 or 1024 bytes.
     num get kibibytes
 
 
-.. _edgedb-dart-ConfigMemory-mebibytes:
+.. _gel-dart-ConfigMemory-mebibytes:
 
 *property* ``.mebibytes``
 .........................
@@ -710,7 +710,7 @@ ambiguous 'kB', which can mean 1000 or 1024 bytes.
     num get mebibytes
 
 
-.. _edgedb-dart-ConfigMemory-pebibytes:
+.. _gel-dart-ConfigMemory-pebibytes:
 
 *property* ``.pebibytes``
 .........................
@@ -721,7 +721,7 @@ ambiguous 'kB', which can mean 1000 or 1024 bytes.
     num get pebibytes
 
 
-.. _edgedb-dart-ConfigMemory-tebibytes:
+.. _gel-dart-ConfigMemory-tebibytes:
 
 *property* ``.tebibytes``
 .........................
@@ -732,7 +732,7 @@ ambiguous 'kB', which can mean 1000 or 1024 bytes.
     num get tebibytes
 
 
-.. _edgedb-dart-ConfigMemory-toString:
+.. _gel-dart-ConfigMemory-toString:
 
 *method* ``.toString()``
 ........................
@@ -745,7 +745,7 @@ ambiguous 'kB', which can mean 1000 or 1024 bytes.
 A string representation of this object.
 
 Some classes have a default textual representation,
-often paired with a static ``parse`` function (like `int.parse <https://api.dart.dev/stable/3.6.1/dart-core/int/parse.html>`__).
+often paired with a static ``parse`` function (like `int.parse <https://api.dart.dev/stable/3.7.1/dart-core/int/parse.html>`__).
 These classes will provide the textual representation as
 their string representation.
 

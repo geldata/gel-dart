@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:edgedb/edgedb.dart';
+import 'package:gel/gel.dart';
 
 Client getClient({int? concurrency, String? database}) {
   return createClient(
@@ -52,7 +52,7 @@ class ServerVersion {
 }
 
 ServerVersion getServerVersion() {
-  final ver = jsonDecode(Platform.environment['_DART_EDGEDB_VERSION'] ?? '');
+  final ver = jsonDecode(Platform.environment['_DART_GEL_VERSION'] ?? '');
   return ServerVersion(ver[0], ver[1]);
 }
 
@@ -63,7 +63,7 @@ ConnectConfig getClientConfig() {
   }
   try {
     final config =
-        jsonDecode(Platform.environment['_DART_EDGEDB_CONNECT_CONFIG'] ?? '');
+        jsonDecode(Platform.environment['_DART_GEL_CONNECT_CONFIG'] ?? '');
     return _config = ConnectConfig.fromJson(config);
   } catch (e) {
     throw Exception('test environment is not initialised');

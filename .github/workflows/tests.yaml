@@ -12,16 +12,16 @@ jobs:
     # when the release PR gets merged by the bot.
     if: needs.prep.outputs.version == 0
     runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.edgedb-version == 'nightly' }}
+    continue-on-error: ${{ matrix.gel-version == 'nightly' }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-2019]
-        edgedb-version: ["stable"]
+        gel-version: ["stable"]
         include:
           - os: ubuntu-latest
-            edgedb-version: "nightly"
+            gel-version: "nightly"
           - os: ubuntu-latest
-            edgedb-version: "3" # LTS
+            gel-version: "3" # LTS
 
     steps:
       - uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
         if: ${{ matrix.os == 'windows-2019' }}
         uses: vampire/setup-wsl@v3.0.0
         with:
-          wsl-shell-user: edgedb
+          wsl-shell-user: gel
           additional-packages: ca-certificates
             curl
 
@@ -44,13 +44,13 @@ jobs:
         run: dart pub get
 
       - name: Lint
-        if: ${{ matrix.os == 'ubuntu-latest' && matrix.edgedb-version == 'stable' }}
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.gel-version == 'stable' }}
         run: dart analyze
 
-      - name: Install EdgeDB
-        uses: edgedb/setup-edgedb@v1
+      - name: Install Gel
+        uses: geldata/setup-gel@v1
         with:
-          server-version: ${{ matrix.edgedb-version }}
+          server-version: ${{ matrix.gel-version }}
 
       - name: Run functional tests
         run: |

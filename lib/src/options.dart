@@ -76,7 +76,7 @@ class RetryOptions {
   }
 }
 
-RetryRule getRuleForException(RetryOptions options, EdgeDBError err) {
+RetryRule getRuleForException(RetryOptions options, GelError err) {
   RetryRule? rule;
   if (err is TransactionConflictError) {
     rule = options._overrides[RetryCondition.transactionConflict];
@@ -90,7 +90,7 @@ RetryRule getRuleForException(RetryOptions options, EdgeDBError err) {
 /// transactions with.
 ///
 /// For more details on transaction modes see the
-/// [Transaction docs](https://www.edgedb.com/docs/reference/edgeql/tx_start#parameters).
+/// [Transaction docs](https://docs.geldata.com/reference/edgeql/transactions).
 ///
 class TransactionOptions {
   final IsolationLevel isolation;
@@ -164,7 +164,7 @@ class Session {
   ///
   /// Equivalent to using the `configure session` command. For available
   /// configuration parameters refer to the
-  /// [Config documentation](https://www.edgedb.com/docs/stdlib/cfg#client-connections).
+  /// [Config documentation](https://docs.geldata.com/reference/stdlib/cfg#client-connections).
   ///
   Session withConfig(Map<String, Object> config) {
     return Session(

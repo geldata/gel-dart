@@ -1,7 +1,7 @@
 /*!
- * This source file is part of the EdgeDB open source project.
+ * This source file is part of the Gel open source project.
  *
- * Copyright 2019-present MagicStack Inc. and the EdgeDB authors.
+ * Copyright 2019-present MagicStack Inc. and the Gel authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ bool _gte(dynamic a, dynamic b) {
 
 /// Represents an interval between values.
 ///
-/// The `Range` type behaves the same as the EdgeDB `range` type.
+/// The `Range` type behaves the same as the Gel `range` type.
 /// Ranges can have a lower and upper boundary, which can be inclusive or
 /// exclusive, or omitted completely (`null`). By default, the lower boundary
 /// is inclusive, and the upper boundary exclusive.

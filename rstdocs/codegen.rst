@@ -5,14 +5,14 @@ Codegen
 :edb-alt-title: EdgeQL Codegen Library
 
 This library provides a `build_runner <https://pub.dev/packages/build_runner>`__
-builder: `edgeqlCodegenBuilder <https://pub.dev/documentation/edgedb/latest/edgeql_codegen/edgeqlCodegenBuilder.html>`__, for generating fully typed query methods
+builder: `edgeqlCodegenBuilder <https://pub.dev/documentation/gel/latest/edgeql_codegen/edgeqlCodegenBuilder.html>`__, for generating fully typed query methods
 from ``.edgeql`` files.
 
 For each ``.edgeql`` file in your project, this builder generates a
 corresponding ``.edgeql.dart`` file containing:
 
 
-* An extension for the `Executor <https://pub.dev/documentation/edgedb/latest/edgedb/Executor-class.html>`__ class, which adds a method to run
+* An extension for the `Executor <https://pub.dev/documentation/gel/latest/gel/Executor-class.html>`__ class, which adds a method to run
   the query in the ``.edgeql`` file and return a fully typed result. This
   method is named from the filename of the ``.edgeql`` file.
   If query parameters are used, these will be reflected in the generated
@@ -32,7 +32,7 @@ corresponding ``.edgeql.dart`` file containing:
   in the query. In the case of unnamed tuples, the instance variable names
   will be in the form ``$n``, where ``n`` is the tuple element index. All
   other types will be decoded the same as for the ``execute()`` and
-  ``query*()`` methods. (See the :ref:`Client <edgedb-dart-Client>` docs for details)
+  ``query*()`` methods. (See the :ref:`Client <gel-dart-Client>` docs for details)
 
 Usage
 -----
@@ -69,7 +69,7 @@ Example
     
 .. code-block:: dart
 
-    import 'package:edgedb/edgedb.dart';
+    import 'package:gel/gel.dart';
     import 'getUserByName.edgeql.dart';
     
     // ...

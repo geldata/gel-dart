@@ -1,8 +1,8 @@
-name: edgedb
-description: Official Dart client library for EdgeDB
+name: gel
+description: Official Dart client library for Gel
 version: 0.5.1
-homepage: https://www.edgedb.com
-repository: https://github.com/edgedb/edgedb-dart
+homepage: https://www.geldata.com
+repository: https://github.com/geldata/gel-dart
 
 environment:
   sdk: ">=2.17.0 <4.0.0"

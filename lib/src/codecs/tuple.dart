@@ -1,7 +1,7 @@
 /*!
- * This source file is part of the EdgeDB open source project.
+ * This source file is part of the Gel open source project.
  *
- * Copyright 2019-present MagicStack Inc. and the EdgeDB authors.
+ * Copyright 2019-present MagicStack Inc. and the Gel authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import 'consts.dart';
 
 typedef TupleReturnTypeConstructor = dynamic Function(List<dynamic>);
 
-abstract class EdgeDBTuple {
+abstract class GelTuple {
   List<dynamic> toList();
 }
 
@@ -39,12 +39,12 @@ class TupleCodec extends Codec {
 
   @override
   void encode(WriteBuffer buf, dynamic object) {
-    if (object is! List && object is! EdgeDBTuple) {
+    if (object is! List && object is! GelTuple) {
       throw InvalidArgumentError(
-          'a List or EdgeDBTuple was expected, got "${object.runtimeType}"');
+          'a List or GelTuple was expected, got "${object.runtimeType}"');
     }
 
-    final els = object is EdgeDBTuple ? object.toList() : object as List;
+    final els = object is GelTuple ? object.toList() : object as List;
 
     final elsLen = subCodecs.length;
 

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:edgedb/edgedb.dart';
+import 'package:gel/gel.dart';
 import 'package:test/test.dart';
 
 void main() {

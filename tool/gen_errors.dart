@@ -17,7 +17,7 @@ main() async {
     ..writeln()
     ..writeln('import \'base.dart\';')
     ..writeln()
-    ..writeln('export \'base.dart\' show EdgeDBError, EdgeDBErrorTag;')
+    ..writeln('export \'base.dart\' show GelError, GelErrorTag;')
     ..writeln();
 
   final mappingBuf = StringBuffer();
@@ -29,7 +29,7 @@ main() async {
     ..writeln('final errorMapping = {');
 
   for (var err in errors) {
-    final base = err[1] ?? 'EdgeDBError';
+    final base = err[1] ?? 'GelError';
 
     final code = '0x${err[2].toRadixString(16).padLeft(2, '0')}'
         '${err[3].toRadixString(16).padLeft(2, '0')}'
@@ -47,7 +47,7 @@ main() async {
       errorsBuf
         ..writeln()
         ..writeln('  @override final tags = '
-            '{${tagItems.map((e) => 'EdgeDBErrorTag.${tagMapping[e]}').join(', ')}};');
+            '{${tagItems.map((e) => 'GelErrorTag.${tagMapping[e]}').join(', ')}};');
     }
     errorsBuf
       ..writeln('}')

@@ -234,7 +234,7 @@ abstract class BaseProtocol {
     message.finishMessage();
   }
 
-  EdgeDBError parseErrorMessage(ReadMessageBuffer message) {
+  GelError parseErrorMessage(ReadMessageBuffer message) {
     message.discard(1); // ignore severity
     final errCode = message.readUint32();
     final errMessage = message.readString();
@@ -554,7 +554,7 @@ abstract class BaseProtocol {
         case MessageType.ErrorResponse:
           {
             error = parseErrorMessage(message);
-            setErrorQuery(error as EdgeDBError, query);
+            setErrorQuery(error as GelError, query);
             break;
           }
 
@@ -704,7 +704,7 @@ abstract class BaseProtocol {
         case MessageType.ErrorResponse:
           {
             error = parseErrorMessage(message);
-            setErrorQuery(error as EdgeDBError, query);
+            setErrorQuery(error as GelError, query);
             break;
           }
 

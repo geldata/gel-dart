@@ -1,19 +1,19 @@
-enum EdgeDBErrorTag {
+enum GelErrorTag {
   shouldReconnect,
   shouldRetry;
 }
 
-class EdgeDBError extends Error {
+class GelError extends Error {
   final String message;
   final Object? source;
   Map<ErrorAttr, String>? _attrs;
   String? _query;
 
-  EdgeDBError(this.message, [this.source]);
+  GelError(this.message, [this.source]);
 
-  final tags = <EdgeDBErrorTag>{};
+  final tags = <GelErrorTag>{};
 
-  bool hasTag(EdgeDBErrorTag tag) {
+  bool hasTag(GelErrorTag tag) {
     return tags.contains(tag);
   }
 
@@ -27,15 +27,15 @@ class EdgeDBError extends Error {
   }
 }
 
-void setErrorAttrs(EdgeDBError error, Map<ErrorAttr, String> attrs) {
+void setErrorAttrs(GelError error, Map<ErrorAttr, String> attrs) {
   error._attrs = attrs;
 }
 
-Map<ErrorAttr, String>? getErrorAttrs(EdgeDBError error) {
+Map<ErrorAttr, String>? getErrorAttrs(GelError error) {
   return error._attrs;
 }
 
-void setErrorQuery(EdgeDBError error, String query) {
+void setErrorQuery(GelError error, String query) {
   error._query = query;
 }
 

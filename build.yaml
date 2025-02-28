@@ -1,6 +1,6 @@
 builders:
   edgeql_codegen:
-    import: "package:edgedb/edgeql_codegen.dart"
+    import: "package:gel/edgeql_codegen.dart"
     builder_factories: ["edgeqlCodegenBuilder"]
     build_extensions: { ".edgeql": [".edgeql.dart", ".edgeql.debug"] }
     build_to: source

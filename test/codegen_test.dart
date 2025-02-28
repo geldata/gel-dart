@@ -8,13 +8,13 @@ import 'testbase.dart';
 void main() {
   test('codegen',
       skip: getServerVersion() < ServerVersion(3, 0)
-          ? 'codegen tests use tuple args, which are only supported in EdgeDB >= 3.0'
+          ? 'codegen tests use tuple args, which are only supported in Gel >= 3.0'
           : null,
       timeout: Timeout(Duration(minutes: 2)), () async {
     final config = getClientConfig();
 
     final env = {
-      'EDGEDB_DSN': 'edgedb://${config.user}:${config.password}@'
+      'GEL_DSN': 'gel://${config.user}:${config.password}@'
           '${config.host}:${config.port}/codegen?'
           'tls_security=no_host_verification&tls_ca_file=${config.tlsCAFile}'
     };

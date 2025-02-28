@@ -1,5 +1,5 @@
 /// This is the core client library, providing the main [createClient()]
-/// function for configuring a connection to an EdgeDB server, and the [Client]
+/// function for configuring a connection to an Gel server, and the [Client]
 /// class, which implements all the methods to run queries, work with
 /// transactions, and manage other client state.
 ///
@@ -22,7 +22,7 @@
 /// }''', ['Iron Man']);
 /// ```
 ///
-/// Remember that [parameters](https://www.edgedb.com/docs/edgeql/parameters#parameter-types-and-json)
+/// Remember that [parameters](https://docs.geldata.com/reference/edgeql/parameters#parameter-types-and-json)
 /// can only be scalars or arrays of scalars.
 ///
 /// ## Scripts​
@@ -53,10 +53,10 @@
 /// use the [Client.transaction()] API.
 ///
 /// ## Type Conversion
-/// EdgeDB types are decoded into/encoded from Dart types as follows (any types
+/// Gel types are decoded into/encoded from Dart types as follows (any types
 /// in parentheses are also valid for query parameters):
 ///
-/// | EdgeDB type                                 | Dart type                     |
+/// | Gel type                                    | Dart type                     |
 /// |---------------------------------------------|-------------------------------|
 /// | Sets                                        | [List<dynamic>]               |
 /// | Arrays                                      | [List<dynamic>]               |
@@ -86,7 +86,7 @@
 /// | `ext::pgvector::vector`                     | [Float32List] ([List<double>])|
 ///
 /// ## Custom types
-/// For EdgeDB types that don't have a built-in Dart type, we provide some
+/// For Gel types that don't have a built-in Dart type, we provide some
 /// custom types:
 /// - [LocalDateTime]
 /// - [LocalDate]
@@ -96,9 +96,9 @@
 /// - [Range]
 /// - [ConfigMemory]
 ///
-/// ## EdgeDB errors
-/// EdgeDB has a large range of type errors for fine-grained error handling,
-/// with all exported error types inheriting from a base [EdgeDBError] type.
+/// ## Gel errors
+/// Gel has a large range of type errors for fine-grained error handling,
+/// with all exported error types inheriting from a base [GelError] type.
 /// These are the main error types which are useful to watch out for (along
 /// with their subtypes):
 /// - [QueryError]: Errors relating to an issue with the query you're trying
@@ -109,11 +109,11 @@
 ///                  passed to methods, etc.
 /// - [AccessError]: The authentication details you provided were incorrect.
 /// - [InternalServerError]: Ideally these should never happen; they indicate a
-///                          bug in the EdgeDB server. It's useful if you can
-///                          report these errors here: <https://github.com/edgedb/edgedb/issues>
+///                          bug in the Gel server. It's useful if you can
+///                          report these errors here: <https://github.com/geldata/gel/issues>
 ///
 
-library edgedb;
+library gel;
 
 export 'src/client.dart' show createClient, Client, Executor, Transaction;
 export 'src/options.dart' hide serialiseState, getRuleForException;

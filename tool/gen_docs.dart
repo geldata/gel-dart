@@ -106,8 +106,8 @@ Future<Map<String, List<RefData>>> generateFileMapping(String basePath) async {
 
   for (var pageRef in pageRefs) {
     final pagePath =
-        'edgedb/${pageRef.name}${pageRef.type == "class" ? "-class" : ""}.html';
-    fileRefMapping[pagePath] = 'edgedb-dart-${pageRef.name}';
+        'gel/${pageRef.name}${pageRef.type == "class" ? "-class" : ""}.html';
+    fileRefMapping[pagePath] = 'gel-dart-${pageRef.name}';
 
     final item = RefData(
         name: pageRef.name,
@@ -119,10 +119,10 @@ Future<Map<String, List<RefData>>> generateFileMapping(String basePath) async {
 
     if (item.type == "class") {
       await for (var entry
-          in Directory(p.join(basePath, "edgedb", item.name)).list()) {
-        final docPath = p.join("edgedb", item.name, p.basename(entry.path));
+          in Directory(p.join(basePath, "gel", item.name)).list()) {
+        final docPath = p.join("gel", item.name, p.basename(entry.path));
         fileRefMapping[docPath] =
-            'edgedb-dart-${item.name}-${p.basenameWithoutExtension(docPath)}';
+            'gel-dart-${item.name}-${p.basenameWithoutExtension(docPath)}';
 
         item.children.add(RefChildData(
           name: p.basenameWithoutExtension(entry.path),
@@ -162,7 +162,7 @@ Future<void> processIndexPage(
   final heading = pageParts[0];
   final content = pageParts[1];
 
-  final indexPage = '''.. _edgedb-dart-intro:
+  final indexPage = '''.. _gel-dart-intro:
 
 $heading
 
@@ -182,8 +182,7 @@ $content''';
 
 Future<void> processClientPage(
     String basePath, String outDir, bool lintMode) async {
-  final doc =
-      await parseHtmlFile(p.join(basePath, "edgedb/edgedb-library.html"));
+  final doc = await parseHtmlFile(p.join(basePath, "gel/index.html"));
 
   final page = '''
 
@@ -360,8 +359,8 @@ Datatypes
 
 Future<void> processCodegenPage(
     String basePath, String outDir, bool lintMode) async {
-  final doc = await parseHtmlFile(
-      p.join(basePath, "edgeql_codegen/edgeql_codegen-library.html"));
+  final doc =
+      await parseHtmlFile(p.join(basePath, "edgeql_codegen/index.html"));
 
   final page = '''
 
@@ -407,7 +406,7 @@ String nodeToRst(html.Node node, {bool skipEmptyText = false}) {
 
         final parsedUrl = Uri.tryParse(href);
         if (parsedUrl != null && parsedUrl.host.isNotEmpty) {
-          if (RegExp(r'^(www\.)?edgedb\.com').hasMatch(parsedUrl.host)) {
+          if (RegExp(r'^(docs\.)?geldata\.com').hasMatch(parsedUrl.host)) {
             href = parsedUrl.path +
                 (parsedUrl.hasFragment ? '#${parsedUrl.fragment}' : '');
             if (hrefToRefMapping.containsKey(href)) {
@@ -421,7 +420,7 @@ String nodeToRst(html.Node node, {bool skipEmptyText = false}) {
           if (ref != null) {
             return ':ref:`$label <$ref>`';
           } else {
-            href = 'https://pub.dev/documentation/edgedb/latest/$path';
+            href = 'https://pub.dev/documentation/gel/latest/$path';
           }
         }
         return '`$label <$href>`__';

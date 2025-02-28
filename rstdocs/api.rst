@@ -5,7 +5,7 @@ API
 :edb-alt-title: Client API Reference
 
 
-.. _edgedb-dart-createClient:
+.. _gel-dart-createClient:
 
 *function* createClient()
 -------------------------
@@ -33,16 +33,16 @@ API
       int? concurrency, }
     )
 
-Creates a new :ref:`Client <edgedb-dart-Client>` instance with the provided connection options.
+Creates a new :ref:`Client <gel-dart-Client>` instance with the provided connection options.
 
 Usually it's recommended to not pass any connection options here, and
-instead let the client resolve the connection options from the edgedb
+instead let the client resolve the connection options from the Gel
 project or environment variables. See the
-:ref:`Client Library Connection <ref_reference_connection>`
+`Client Library Connection </reference/reference/connection>`__
 documentation for details on connection options and how they are
 resolved.
 
-The ``config`` parameter allows you to pass in a `ConnectConfig <https://pub.dev/documentation/edgedb/latest/edgedb/ConnectConfig-class.html>`__ object, which
+The ``config`` parameter allows you to pass in a `ConnectConfig <https://pub.dev/documentation/gel/latest/gel/ConnectConfig-class.html>`__ object, which
 is just a wrapper object containing connection options to make them easier
 to manage in your application. If a connection option exists both in the
 ``config`` object and is passed as a parameter, the value passed as a
@@ -51,14 +51,14 @@ parameter will override the value in the ``config`` object.
 Alongside the connection options, there are the following parameters:
 
 
-* ``concurrency``: Specifies the maximum number of connections the :ref:`Client <edgedb-dart-Client>`
+* ``concurrency``: Specifies the maximum number of connections the :ref:`Client <gel-dart-Client>`
   will create in it's connection pool. If not specified the
   concurrency will be controlled by the server. This is
   recommended as it allows the server to better manage the
   number of client connections based on it's own available
   resources.
 
-.. _edgedb-dart-Client:
+.. _gel-dart-Client:
 
 *class* Client
 --------------
@@ -67,18 +67,18 @@ Represents a pool of connections to the database, provides methods to run
 queries and manages the context in which queries are run (ie. setting
 globals, modifying session config, etc.)
 
-The :ref:`Client <edgedb-dart-Client>` class cannot be instantiated directly, and is instead created
-by the :ref:`createClient() <edgedb-dart-createClient>` function. Since creating a client is relatively
-expensive, it is recommended to create a single :ref:`Client <edgedb-dart-Client>` instance that you
+The :ref:`Client <gel-dart-Client>` class cannot be instantiated directly, and is instead created
+by the :ref:`createClient() <gel-dart-createClient>` function. Since creating a client is relatively
+expensive, it is recommended to create a single :ref:`Client <gel-dart-Client>` instance that you
 can then import and use across your app.
 
-The ``with*()`` methods return a new :ref:`Client <edgedb-dart-Client>` instance derived from this
+The ``with*()`` methods return a new :ref:`Client <gel-dart-Client>` instance derived from this
 instance. The derived instances all share the pool of connections managed
-by the root :ref:`Client <edgedb-dart-Client>` instance (ie. the instance created by :ref:`createClient() <edgedb-dart-createClient>`),
-so calling the :ref:`ensureConnected() <edgedb-dart-Client-ensureConnected>`, :ref:`close() <edgedb-dart-Client-close>` or :ref:`terminate() <edgedb-dart-Client-terminate>` methods on
+by the root :ref:`Client <gel-dart-Client>` instance (ie. the instance created by :ref:`createClient() <gel-dart-createClient>`),
+so calling the :ref:`ensureConnected() <gel-dart-Client-ensureConnected>`, :ref:`close() <gel-dart-Client-close>` or :ref:`terminate() <gel-dart-Client-terminate>` methods on
 any of these instances will affect them all.
 
-.. _edgedb-dart-Client-isClosed:
+.. _gel-dart-Client-isClosed:
 
 *property* ``.isClosed``
 ........................
@@ -88,10 +88,10 @@ any of these instances will affect them all.
 
     bool get isClosed
 
-Whether :ref:`close() <edgedb-dart-Client-close>` (or :ref:`terminate() <edgedb-dart-Client-terminate>`) has been called on the client.
-If :ref:`isClosed <edgedb-dart-Client-isClosed>` is ``true``, subsequent calls to query methods will fail.
+Whether :ref:`close() <gel-dart-Client-close>` (or :ref:`terminate() <gel-dart-Client-terminate>`) has been called on the client.
+If :ref:`isClosed <gel-dart-Client-isClosed>` is ``true``, subsequent calls to query methods will fail.
 
-.. _edgedb-dart-Client-close:
+.. _gel-dart-Client-close:
 
 *method* ``.close()``
 .....................
@@ -110,7 +110,7 @@ yet, will return an error.
 
 A warning is produced if the pool takes more than 60 seconds to close.
 
-.. _edgedb-dart-Client-ensureConnected:
+.. _gel-dart-Client-ensureConnected:
 
 *method* ``.ensureConnected()``
 ...............................
@@ -126,12 +126,12 @@ attempts to open a connection, else returns immediately.
 Since the client lazily creates new connections as needed (up to the
 configured ``concurrency`` limit), the first connection attempt will
 usually only happen when the first query is run on a client.
-The :ref:`ensureConnected() <edgedb-dart-Client-ensureConnected>` method allows you to explicitly check that the
+The :ref:`ensureConnected() <gel-dart-Client-ensureConnected>` method allows you to explicitly check that the
 client can connect to the database without running a query
 (can be useful to catch any errors resulting from connection
 mis-configuration).
 
-.. _edgedb-dart-Client-execute:
+.. _gel-dart-Client-execute:
 
 *method* ``.execute()``
 .......................
@@ -146,10 +146,10 @@ mis-configuration).
 
 Executes a query, returning no result.
 
-For details on ``args`` see the ``edgedb`` library
-`docs page <https://pub.dev/documentation/edgedb/latest/edgedb-library.html>`__.
+For details on ``args`` see the ``gel`` library
+`docs page <https://pub.dev/documentation/gel/latest/gel>`__.
 
-.. _edgedb-dart-Client-executeSQL:
+.. _gel-dart-Client-executeSQL:
 
 *method* ``.executeSQL()``
 ..........................
@@ -164,10 +164,10 @@ For details on ``args`` see the ``edgedb`` library
 
 Executes a SQL query, returning no result.
 
-For details on ``args`` see the ``edgedb`` library
-`docs page <https://pub.dev/documentation/edgedb/latest/edgedb-library.html>`__.
+For details on ``args`` see the ``gel`` library
+`docs page <https://pub.dev/documentation/gel/latest/gel>`__.
 
-.. _edgedb-dart-Client-query:
+.. _gel-dart-Client-query:
 
 *method* ``.query()``
 .....................
@@ -182,10 +182,10 @@ For details on ``args`` see the ``edgedb`` library
 
 Executes a query, returning a ``List`` of results.
 
-For details on result types and ``args`` see the ``edgedb`` library
-`docs page <https://pub.dev/documentation/edgedb/latest/edgedb-library.html>`__.
+For details on result types and ``args`` see the ``gel`` library
+`docs page <https://pub.dev/documentation/gel/latest/gel>`__.
 
-.. _edgedb-dart-Client-queryJSON:
+.. _gel-dart-Client-queryJSON:
 
 *method* ``.queryJSON()``
 .........................
@@ -200,10 +200,10 @@ For details on result types and ``args`` see the ``edgedb`` library
 
 Executes a query, returning the result as a JSON encoded ``String``.
 
-For details on ``args`` see the ``edgedb`` library
-`docs page <https://pub.dev/documentation/edgedb/latest/edgedb-library.html>`__.
+For details on ``args`` see the ``gel`` library
+`docs page <https://pub.dev/documentation/gel/latest/gel>`__.
 
-.. _edgedb-dart-Client-queryRequiredSingle:
+.. _gel-dart-Client-queryRequiredSingle:
 
 *method* ``.queryRequiredSingle()``
 ...................................
@@ -219,13 +219,13 @@ For details on ``args`` see the ``edgedb`` library
 Executes a query, returning a single (non-``null``) result.
 
 The query must return exactly one element. If the query returns more
-than one element, a `ResultCardinalityMismatchError <https://pub.dev/documentation/edgedb/latest/edgedb/ResultCardinalityMismatchError-class.html>`__ error is thrown.
-If the query returns an empty set, a `NoDataError <https://pub.dev/documentation/edgedb/latest/edgedb/NoDataError-class.html>`__ error is thrown.
+than one element, a `ResultCardinalityMismatchError <https://pub.dev/documentation/gel/latest/gel/ResultCardinalityMismatchError-class.html>`__ error is thrown.
+If the query returns an empty set, a `NoDataError <https://pub.dev/documentation/gel/latest/gel/NoDataError-class.html>`__ error is thrown.
 
-For details on result types and ``args`` see the ``edgedb`` library
-`docs page <https://pub.dev/documentation/edgedb/latest/edgedb-library.html>`__.
+For details on result types and ``args`` see the ``gel`` library
+`docs page <https://pub.dev/documentation/gel/latest/gel>`__.
 
-.. _edgedb-dart-Client-queryRequiredSingleJSON:
+.. _gel-dart-Client-queryRequiredSingleJSON:
 
 *method* ``.queryRequiredSingleJSON()``
 .......................................
@@ -241,13 +241,13 @@ For details on result types and ``args`` see the ``edgedb`` library
 Executes a query, returning the result as a JSON encoded ``String``.
 
 The query must return exactly one element. If the query returns more
-than one element, a `ResultCardinalityMismatchError <https://pub.dev/documentation/edgedb/latest/edgedb/ResultCardinalityMismatchError-class.html>`__ error is thrown.
-If the query returns an empty set, a `NoDataError <https://pub.dev/documentation/edgedb/latest/edgedb/NoDataError-class.html>`__ error is thrown.
+than one element, a `ResultCardinalityMismatchError <https://pub.dev/documentation/gel/latest/gel/ResultCardinalityMismatchError-class.html>`__ error is thrown.
+If the query returns an empty set, a `NoDataError <https://pub.dev/documentation/gel/latest/gel/NoDataError-class.html>`__ error is thrown.
 
-For details on ``args`` see the ``edgedb`` library
-`docs page <https://pub.dev/documentation/edgedb/latest/edgedb-library.html>`__.
+For details on ``args`` see the ``gel`` library
+`docs page <https://pub.dev/documentation/gel/latest/gel>`__.
 
-.. _edgedb-dart-Client-querySQL:
+.. _gel-dart-Client-querySQL:
 
 *method* ``.querySQL()``
 ........................
@@ -262,10 +262,10 @@ For details on ``args`` see the ``edgedb`` library
 
 Executes a SQL query, returning a ``List`` of results.
 
-For details on result types and ``args`` see the ``edgedb`` library
-`docs page <https://pub.dev/documentation/edgedb/latest/edgedb-library.html>`__.
+For details on result types and ``args`` see the ``gel`` library
+`docs page <https://pub.dev/documentation/gel/latest/gel>`__.
 
-.. _edgedb-dart-Client-querySingle:
+.. _gel-dart-Client-querySingle:
 
 *method* ``.querySingle()``
 ...........................
@@ -281,12 +281,12 @@ For details on result types and ``args`` see the ``edgedb`` library
 Executes a query, returning a single (possibly ``null``) result.
 
 The query must return no more than one element. If the query returns
-more than one element, a `ResultCardinalityMismatchError <https://pub.dev/documentation/edgedb/latest/edgedb/ResultCardinalityMismatchError-class.html>`__ error is thrown.
+more than one element, a `ResultCardinalityMismatchError <https://pub.dev/documentation/gel/latest/gel/ResultCardinalityMismatchError-class.html>`__ error is thrown.
 
-For details on result types and ``args`` see the ``edgedb`` library
-`docs page <https://pub.dev/documentation/edgedb/latest/edgedb-library.html>`__.
+For details on result types and ``args`` see the ``gel`` library
+`docs page <https://pub.dev/documentation/gel/latest/gel>`__.
 
-.. _edgedb-dart-Client-querySingleJSON:
+.. _gel-dart-Client-querySingleJSON:
 
 *method* ``.querySingleJSON()``
 ...............................
@@ -302,12 +302,12 @@ For details on result types and ``args`` see the ``edgedb`` library
 Executes a query, returning the result as a JSON encoded ``String``.
 
 The query must return no more than one element. If the query returns
-more than one element, a `ResultCardinalityMismatchError <https://pub.dev/documentation/edgedb/latest/edgedb/ResultCardinalityMismatchError-class.html>`__ error is thrown.
+more than one element, a `ResultCardinalityMismatchError <https://pub.dev/documentation/gel/latest/gel/ResultCardinalityMismatchError-class.html>`__ error is thrown.
 
-For details on ``args`` see the ``edgedb`` library
-`docs page <https://pub.dev/documentation/edgedb/latest/edgedb-library.html>`__.
+For details on ``args`` see the ``gel`` library
+`docs page <https://pub.dev/documentation/gel/latest/gel>`__.
 
-.. _edgedb-dart-Client-terminate:
+.. _gel-dart-Client-terminate:
 
 *method* ``.terminate()``
 .........................
@@ -320,7 +320,7 @@ For details on ``args`` see the ``edgedb`` library
 Immediately closes all connections in the client's pool, without waiting
 for any running queries to finish.
 
-.. _edgedb-dart-Client-transaction:
+.. _gel-dart-Client-transaction:
 
 *method* ``.transaction<T>()``
 ..............................
@@ -340,20 +340,20 @@ queries atomically, instead consider just using the ``execute()``/
 ``query*()`` methods - they all support queries containing multiple
 statements.
 
-The :ref:`transaction() <edgedb-dart-Client-transaction>` method expects an ``action`` function returning a
+The :ref:`transaction() <gel-dart-Client-transaction>` method expects an ``action`` function returning a
 ``Future``, and will automatically handle starting the transaction before
 the ``action`` function is run, and commiting / rolling back the transaction
 when the ``Future`` completes / throws an error.
 
-The ``action`` function is passed a `Transaction <https://pub.dev/documentation/edgedb/latest/edgedb/Transaction-class.html>`__ object, which implements
-the same ``execute()``/``query*()`` methods as on :ref:`Client <edgedb-dart-Client>`, and should be
-used instead of the :ref:`Client <edgedb-dart-Client>` methods. The notable difference of these
-methods on `Transaction <https://pub.dev/documentation/edgedb/latest/edgedb/Transaction-class.html>`__ as compared to the :ref:`Client <edgedb-dart-Client>` query methods, is
+The ``action`` function is passed a `Transaction <https://pub.dev/documentation/gel/latest/gel/Transaction-class.html>`__ object, which implements
+the same ``execute()``/``query*()`` methods as on :ref:`Client <gel-dart-Client>`, and should be
+used instead of the :ref:`Client <gel-dart-Client>` methods. The notable difference of these
+methods on `Transaction <https://pub.dev/documentation/gel/latest/gel/Transaction-class.html>`__ as compared to the :ref:`Client <gel-dart-Client>` query methods, is
 that they do not attempt to retry on errors. Instead the entire ``action``
 function is re-executed if a retryable error (such as a transient
 network error or transaction serialization error) is thrown inside it.
 Non-retryable errors will cause the transaction to be automatically
-rolled back, and the error re-thrown by :ref:`transaction() <edgedb-dart-Client-transaction>`.
+rolled back, and the error re-thrown by :ref:`transaction() <gel-dart-Client-transaction>`.
 
 A key implication of the whole ``action`` function being re-executed on
 transaction retries, is that non-querying code will also be re-executed,
@@ -362,11 +362,11 @@ recommended that the ``action`` does not have long running code, as
 holding a transaction open is expensive on the server, and will negatively
 impact performance.
 
-The number of times :ref:`transaction() <edgedb-dart-Client-transaction>` will attempt to execute the
+The number of times :ref:`transaction() <gel-dart-Client-transaction>` will attempt to execute the
 transaction, and the backoff timeout between retries can be configured
-with :ref:`withRetryOptions() <edgedb-dart-Client-withRetryOptions>`.
+with :ref:`withRetryOptions() <gel-dart-Client-withRetryOptions>`.
 
-.. _edgedb-dart-Client-withConfig:
+.. _gel-dart-Client-withConfig:
 
 *method* ``.withConfig()``
 ..........................
@@ -378,7 +378,7 @@ with :ref:`withRetryOptions() <edgedb-dart-Client-withRetryOptions>`.
       Map<String, Object> config
     )
 
-Returns a new :ref:`Client <edgedb-dart-Client>` instance with the specified client session
+Returns a new :ref:`Client <gel-dart-Client>` instance with the specified client session
 configuration.
 
 The ``config`` parameter is merged with any existing
@@ -386,9 +386,9 @@ session config defined on the current client instance.
 
 Equivalent to using the ``configure session`` command. For available
 configuration parameters refer to the
-:ref:`Config documentation <ref_std_cfg_client_connections>`.
+`Config documentation </reference/stdlib/cfg#client-connections>`__.
 
-.. _edgedb-dart-Client-withGlobals:
+.. _gel-dart-Client-withGlobals:
 
 *method* ``.withGlobals()``
 ...........................
@@ -400,7 +400,7 @@ configuration parameters refer to the
       Map<String, dynamic> globals
     )
 
-Returns a new :ref:`Client <edgedb-dart-Client>` instance with the specified global values.
+Returns a new :ref:`Client <gel-dart-Client>` instance with the specified global values.
 
 The ``globals`` parameter is merged with any existing globals defined
 on the current client instance.
@@ -417,7 +417,7 @@ Example:
       select User {name} filter .id = global userId
     ''');
     
-.. _edgedb-dart-Client-withModuleAliases:
+.. _gel-dart-Client-withModuleAliases:
 
 *method* ``.withModuleAliases()``
 .................................
@@ -429,7 +429,7 @@ Example:
       Map<String, String> aliases
     )
 
-Returns a new :ref:`Client <edgedb-dart-Client>` instance with the specified module aliases.
+Returns a new :ref:`Client <gel-dart-Client>` instance with the specified module aliases.
 
 The ``aliases`` parameter is merged with any existing module aliases
 defined on the current client instance.
@@ -449,7 +449,7 @@ Example:
     ''');
     // "2.0"
     
-.. _edgedb-dart-Client-withRetryOptions:
+.. _gel-dart-Client-withRetryOptions:
 
 *method* ``.withRetryOptions()``
 ................................
@@ -461,9 +461,9 @@ Example:
       RetryOptions options
     )
 
-Returns a new :ref:`Client <edgedb-dart-Client>` instance with the specified :ref:`RetryOptions <edgedb-dart-RetryOptions>`.
+Returns a new :ref:`Client <gel-dart-Client>` instance with the specified :ref:`RetryOptions <gel-dart-RetryOptions>`.
 
-.. _edgedb-dart-Client-withSession:
+.. _gel-dart-Client-withSession:
 
 *method* ``.withSession()``
 ...........................
@@ -475,13 +475,13 @@ Returns a new :ref:`Client <edgedb-dart-Client>` instance with the specified :re
       Session session
     )
 
-Returns a new :ref:`Client <edgedb-dart-Client>` instance with the specified :ref:`Session <edgedb-dart-Session>` options.
+Returns a new :ref:`Client <gel-dart-Client>` instance with the specified :ref:`Session <gel-dart-Session>` options.
 
-Instead of specifying an entirely new :ref:`Session <edgedb-dart-Session>` options object, :ref:`Client <edgedb-dart-Client>`
-also implements the :ref:`withModuleAliases <edgedb-dart-Client-withModuleAliases>`, :ref:`withConfig <edgedb-dart-Client-withConfig>` and :ref:`withGlobals <edgedb-dart-Client-withGlobals>`
+Instead of specifying an entirely new :ref:`Session <gel-dart-Session>` options object, :ref:`Client <gel-dart-Client>`
+also implements the :ref:`withModuleAliases <gel-dart-Client-withModuleAliases>`, :ref:`withConfig <gel-dart-Client-withConfig>` and :ref:`withGlobals <gel-dart-Client-withGlobals>`
 methods for convenience.
 
-.. _edgedb-dart-Client-withTransactionOptions:
+.. _gel-dart-Client-withTransactionOptions:
 
 *method* ``.withTransactionOptions()``
 ......................................
@@ -493,17 +493,17 @@ methods for convenience.
       TransactionOptions options
     )
 
-Returns a new :ref:`Client <edgedb-dart-Client>` instance with the specified :ref:`TransactionOptions <edgedb-dart-TransactionOptions>`.
+Returns a new :ref:`Client <gel-dart-Client>` instance with the specified :ref:`TransactionOptions <gel-dart-TransactionOptions>`.
 
-.. _edgedb-dart-Options:
+.. _gel-dart-Options:
 
 *class* Options
 ---------------
 
-Manages all options (:ref:`RetryOptions <edgedb-dart-RetryOptions>`, :ref:`TransactionOptions <edgedb-dart-TransactionOptions>` and
-:ref:`Session <edgedb-dart-Session>`) for a :ref:`Client <edgedb-dart-Client>`.
+Manages all options (:ref:`RetryOptions <gel-dart-RetryOptions>`, :ref:`TransactionOptions <gel-dart-TransactionOptions>` and
+:ref:`Session <gel-dart-Session>`) for a :ref:`Client <gel-dart-Client>`.
 
-.. _edgedb-dart-Options-Options:
+.. _gel-dart-Options-Options:
 
 *constructor* ``Options()``
 ...........................
@@ -518,7 +518,7 @@ Manages all options (:ref:`RetryOptions <edgedb-dart-RetryOptions>`, :ref:`Trans
     )
 
 
-.. _edgedb-dart-Options-retryOptions:
+.. _gel-dart-Options-retryOptions:
 
 *property* ``.retryOptions``
 ............................
@@ -529,7 +529,7 @@ Manages all options (:ref:`RetryOptions <edgedb-dart-RetryOptions>`, :ref:`Trans
     final RetryOptions retryOptions;
 
 
-.. _edgedb-dart-Options-session:
+.. _gel-dart-Options-session:
 
 *property* ``.session``
 .......................
@@ -540,7 +540,7 @@ Manages all options (:ref:`RetryOptions <edgedb-dart-RetryOptions>`, :ref:`Trans
     final Session session;
 
 
-.. _edgedb-dart-Options-transactionOptions:
+.. _gel-dart-Options-transactionOptions:
 
 *property* ``.transactionOptions``
 ..................................
@@ -551,7 +551,7 @@ Manages all options (:ref:`RetryOptions <edgedb-dart-RetryOptions>`, :ref:`Trans
     final TransactionOptions transactionOptions;
 
 
-.. _edgedb-dart-Options-defaults:
+.. _gel-dart-Options-defaults:
 
 *method* ``.defaults()``
 ........................
@@ -561,9 +561,9 @@ Manages all options (:ref:`RetryOptions <edgedb-dart-RetryOptions>`, :ref:`Trans
 
     Options defaults()
 
-Creates a new :ref:`Options <edgedb-dart-Options>` object with all options set to their defaults.
+Creates a new :ref:`Options <gel-dart-Options>` object with all options set to their defaults.
 
-.. _edgedb-dart-Options-withRetryOptions:
+.. _gel-dart-Options-withRetryOptions:
 
 *method* ``.withRetryOptions()``
 ................................
@@ -575,9 +575,9 @@ Creates a new :ref:`Options <edgedb-dart-Options>` object with all options set t
       RetryOptions options
     )
 
-Returns a new :ref:`Options <edgedb-dart-Options>` object with the specified :ref:`RetryOptions <edgedb-dart-RetryOptions>`.
+Returns a new :ref:`Options <gel-dart-Options>` object with the specified :ref:`RetryOptions <gel-dart-RetryOptions>`.
 
-.. _edgedb-dart-Options-withSession:
+.. _gel-dart-Options-withSession:
 
 *method* ``.withSession()``
 ...........................
@@ -589,9 +589,9 @@ Returns a new :ref:`Options <edgedb-dart-Options>` object with the specified :re
       Session session
     )
 
-Returns a new :ref:`Options <edgedb-dart-Options>` object with the specified :ref:`Session <edgedb-dart-Session>` options.
+Returns a new :ref:`Options <gel-dart-Options>` object with the specified :ref:`Session <gel-dart-Session>` options.
 
-.. _edgedb-dart-Options-withTransactionOptions:
+.. _gel-dart-Options-withTransactionOptions:
 
 *method* ``.withTransactionOptions()``
 ......................................
@@ -603,9 +603,9 @@ Returns a new :ref:`Options <edgedb-dart-Options>` object with the specified :re
       TransactionOptions options
     )
 
-Returns a new :ref:`Options <edgedb-dart-Options>` object with the specified :ref:`TransactionOptions <edgedb-dart-TransactionOptions>`.
+Returns a new :ref:`Options <gel-dart-Options>` object with the specified :ref:`TransactionOptions <gel-dart-TransactionOptions>`.
 
-.. _edgedb-dart-Session:
+.. _gel-dart-Session:
 
 *class* Session
 ---------------
@@ -613,7 +613,7 @@ Returns a new :ref:`Options <edgedb-dart-Options>` object with the specified :re
 Configuration of a session, containing the config, aliases, and globals
 to be used when executing a query.
 
-.. _edgedb-dart-Session-Session:
+.. _gel-dart-Session-Session:
 
 *constructor* ``Session()``
 ...........................
@@ -628,11 +628,11 @@ to be used when executing a query.
       Map<String, dynamic>? globals, }
     )
 
-Creates a new :ref:`Session <edgedb-dart-Session>` object with the given options.
+Creates a new :ref:`Session <gel-dart-Session>` object with the given options.
 
 Refer to the individial ``with*`` methods for details on each option.
 
-.. _edgedb-dart-Session-config:
+.. _gel-dart-Session-config:
 
 *property* ``.config``
 ......................
@@ -643,7 +643,7 @@ Refer to the individial ``with*`` methods for details on each option.
     final Map<String, Object> config;
 
 
-.. _edgedb-dart-Session-globals:
+.. _gel-dart-Session-globals:
 
 *property* ``.globals``
 .......................
@@ -654,7 +654,7 @@ Refer to the individial ``with*`` methods for details on each option.
     final Map<String, dynamic> globals;
 
 
-.. _edgedb-dart-Session-module:
+.. _gel-dart-Session-module:
 
 *property* ``.module``
 ......................
@@ -665,7 +665,7 @@ Refer to the individial ``with*`` methods for details on each option.
     final String module;
 
 
-.. _edgedb-dart-Session-moduleAliases:
+.. _gel-dart-Session-moduleAliases:
 
 *property* ``.moduleAliases``
 .............................
@@ -676,7 +676,7 @@ Refer to the individial ``with*`` methods for details on each option.
     final Map<String, String> moduleAliases;
 
 
-.. _edgedb-dart-Session-defaults:
+.. _gel-dart-Session-defaults:
 
 *method* ``.defaults()``
 ........................
@@ -686,9 +686,9 @@ Refer to the individial ``with*`` methods for details on each option.
 
     Session defaults()
 
-Creates a new :ref:`Session <edgedb-dart-Session>` with all options set to their defaults.
+Creates a new :ref:`Session <gel-dart-Session>` with all options set to their defaults.
 
-.. _edgedb-dart-Session-withConfig:
+.. _gel-dart-Session-withConfig:
 
 *method* ``.withConfig()``
 ..........................
@@ -700,17 +700,17 @@ Creates a new :ref:`Session <edgedb-dart-Session>` with all options set to their
       Map<String, Object> config
     )
 
-Returns a new :ref:`Session <edgedb-dart-Session>` with the specified client session
+Returns a new :ref:`Session <gel-dart-Session>` with the specified client session
 configuration.
 
 The ``config`` parameter is merged with any existing
-session config defined on the current :ref:`Session <edgedb-dart-Session>`.
+session config defined on the current :ref:`Session <gel-dart-Session>`.
 
 Equivalent to using the ``configure session`` command. For available
 configuration parameters refer to the
-:ref:`Config documentation <ref_std_cfg_client_connections>`.
+`Config documentation </reference/stdlib/cfg#client-connections>`__.
 
-.. _edgedb-dart-Session-withGlobals:
+.. _gel-dart-Session-withGlobals:
 
 *method* ``.withGlobals()``
 ...........................
@@ -722,14 +722,14 @@ configuration parameters refer to the
       Map<String, dynamic> globals
     )
 
-Returns a new :ref:`Session <edgedb-dart-Session>` with the specified global values.
+Returns a new :ref:`Session <gel-dart-Session>` with the specified global values.
 
 The ``globals`` parameter is merged with any existing globals defined
-on the current :ref:`Session <edgedb-dart-Session>`.
+on the current :ref:`Session <gel-dart-Session>`.
 
 Equivalent to using the ``set global`` command.
 
-.. _edgedb-dart-Session-withModuleAliases:
+.. _gel-dart-Session-withModuleAliases:
 
 *method* ``.withModuleAliases()``
 .................................
@@ -741,30 +741,30 @@ Equivalent to using the ``set global`` command.
       Map<String, String> aliases
     )
 
-Returns a new :ref:`Session <edgedb-dart-Session>` with the specified module aliases.
+Returns a new :ref:`Session <gel-dart-Session>` with the specified module aliases.
 
 The ``aliases`` parameter is merged with any existing module aliases
-defined on the current :ref:`Session <edgedb-dart-Session>`.
+defined on the current :ref:`Session <gel-dart-Session>`.
 
 If the alias ``name`` is ``'module'`` this is equivalent to using the
 ``set module`` command, otherwise it is equivalent to the ``set alias``
 command.
 
-.. _edgedb-dart-RetryOptions:
+.. _gel-dart-RetryOptions:
 
 *class* RetryOptions
 --------------------
 
-Options that define how a :ref:`Client <edgedb-dart-Client>` will handle automatically retrying
+Options that define how a :ref:`Client <gel-dart-Client>` will handle automatically retrying
 queries in the event of a retryable error.
 
-The options are specified by `RetryRule <https://pub.dev/documentation/edgedb/latest/edgedb/RetryRule-class.html>`__'s, which define a number of times
+The options are specified by `RetryRule <https://pub.dev/documentation/gel/latest/gel/RetryRule-class.html>`__'s, which define a number of times
 to attempt to retry a query, and a backoff function to determine how long
-to wait after each retry before attempting the query again. :ref:`RetryOptions <edgedb-dart-RetryOptions>`
-has a default `RetryRule <https://pub.dev/documentation/edgedb/latest/edgedb/RetryRule-class.html>`__, and can be configured with extra `RetryRule <https://pub.dev/documentation/edgedb/latest/edgedb/RetryRule-class.html>`__'s
+to wait after each retry before attempting the query again. :ref:`RetryOptions <gel-dart-RetryOptions>`
+has a default `RetryRule <https://pub.dev/documentation/gel/latest/gel/RetryRule-class.html>`__, and can be configured with extra `RetryRule <https://pub.dev/documentation/gel/latest/gel/RetryRule-class.html>`__'s
 which override the default for given error conditions.
 
-.. _edgedb-dart-RetryOptions-RetryOptions:
+.. _gel-dart-RetryOptions-RetryOptions:
 
 *constructor* ``RetryOptions()``
 ................................
@@ -777,13 +777,13 @@ which override the default for given error conditions.
       BackoffFunction? backoff, }
     )
 
-Creates a new :ref:`RetryOptions <edgedb-dart-RetryOptions>` object, with a default `RetryRule <https://pub.dev/documentation/edgedb/latest/edgedb/RetryRule-class.html>`__, with
+Creates a new :ref:`RetryOptions <gel-dart-RetryOptions>` object, with a default `RetryRule <https://pub.dev/documentation/gel/latest/gel/RetryRule-class.html>`__, with
 the given ``attempts`` and ``backoff`` function.
 
 If ``attempts`` or ``backoff`` are not specified, the defaults of 3 ``attempts``
-and the exponential `defaultBackoff <https://pub.dev/documentation/edgedb/latest/edgedb/defaultBackoff.html>`__ function are used.
+and the exponential `defaultBackoff <https://pub.dev/documentation/gel/latest/gel/defaultBackoff.html>`__ function are used.
 
-.. _edgedb-dart-RetryOptions-defaultRetryRule:
+.. _gel-dart-RetryOptions-defaultRetryRule:
 
 *property* ``.defaultRetryRule``
 ................................
@@ -794,7 +794,7 @@ and the exponential `defaultBackoff <https://pub.dev/documentation/edgedb/latest
     final RetryRule defaultRetryRule;
 
 
-.. _edgedb-dart-RetryOptions-defaults:
+.. _gel-dart-RetryOptions-defaults:
 
 *method* ``.defaults()``
 ........................
@@ -804,9 +804,9 @@ and the exponential `defaultBackoff <https://pub.dev/documentation/edgedb/latest
 
     RetryOptions defaults()
 
-Creates a new :ref:`RetryOptions <edgedb-dart-RetryOptions>` with all options set to their defaults.
+Creates a new :ref:`RetryOptions <gel-dart-RetryOptions>` with all options set to their defaults.
 
-.. _edgedb-dart-RetryOptions-withRule:
+.. _gel-dart-RetryOptions-withRule:
 
 *method* ``.withRule()``
 ........................
@@ -820,24 +820,24 @@ Creates a new :ref:`RetryOptions <edgedb-dart-RetryOptions>` with all options se
       BackoffFunction? backoff, }
     )
 
-Adds a new `RetryRule <https://pub.dev/documentation/edgedb/latest/edgedb/RetryRule-class.html>`__ with the given ``attempts`` and ``backoff`` function,
-that overrides the default `RetryRule <https://pub.dev/documentation/edgedb/latest/edgedb/RetryRule-class.html>`__ for a given error ``condition``.
+Adds a new `RetryRule <https://pub.dev/documentation/gel/latest/gel/RetryRule-class.html>`__ with the given ``attempts`` and ``backoff`` function,
+that overrides the default `RetryRule <https://pub.dev/documentation/gel/latest/gel/RetryRule-class.html>`__ for a given error ``condition``.
 
 If ``attempts`` or ``backoff`` are not specified, the values of the default
-`RetryRule <https://pub.dev/documentation/edgedb/latest/edgedb/RetryRule-class.html>`__ of this :ref:`RetryOptions <edgedb-dart-RetryOptions>` are used.
+`RetryRule <https://pub.dev/documentation/gel/latest/gel/RetryRule-class.html>`__ of this :ref:`RetryOptions <gel-dart-RetryOptions>` are used.
 
-.. _edgedb-dart-TransactionOptions:
+.. _gel-dart-TransactionOptions:
 
 *class* TransactionOptions
 --------------------------
 
-Defines the transaction mode that :ref:`Client.transaction <edgedb-dart-Client-transaction>` runs
+Defines the transaction mode that :ref:`Client.transaction <gel-dart-Client-transaction>` runs
 transactions with.
 
 For more details on transaction modes see the
-:ref:`Transaction docs <ref_eql_statements_start_tx>`.
+`Transaction docs </reference/edgeql/transactions>`__.
 
-.. _edgedb-dart-TransactionOptions-TransactionOptions:
+.. _gel-dart-TransactionOptions-TransactionOptions:
 
 *constructor* ``TransactionOptions()``
 ......................................
@@ -851,7 +851,7 @@ For more details on transaction modes see the
       bool? deferrable, }
     )
 
-Creates a new :ref:`TransactionOptions <edgedb-dart-TransactionOptions>` object with the given ``isolation``,
+Creates a new :ref:`TransactionOptions <gel-dart-TransactionOptions>` object with the given ``isolation``,
 ``readonly`` and ``deferrable`` options.
 
 If not specified, the defaults are as follows:
@@ -863,7 +863,7 @@ If not specified, the defaults are as follows:
 
 * ``deferrable``: false
 
-.. _edgedb-dart-TransactionOptions-deferrable:
+.. _gel-dart-TransactionOptions-deferrable:
 
 *property* ``.deferrable``
 ..........................
@@ -874,7 +874,7 @@ If not specified, the defaults are as follows:
     final bool deferrable;
 
 
-.. _edgedb-dart-TransactionOptions-isolation:
+.. _gel-dart-TransactionOptions-isolation:
 
 *property* ``.isolation``
 .........................
@@ -885,7 +885,7 @@ If not specified, the defaults are as follows:
     final IsolationLevel isolation;
 
 
-.. _edgedb-dart-TransactionOptions-readonly:
+.. _gel-dart-TransactionOptions-readonly:
 
 *property* ``.readonly``
 ........................
@@ -896,7 +896,7 @@ If not specified, the defaults are as follows:
     final bool readonly;
 
 
-.. _edgedb-dart-TransactionOptions-defaults:
+.. _gel-dart-TransactionOptions-defaults:
 
 *method* ``.defaults()``
 ........................
@@ -906,4 +906,4 @@ If not specified, the defaults are as follows:
 
     TransactionOptions defaults()
 
-Creates a new :ref:`TransactionOptions <edgedb-dart-TransactionOptions>` with all options set to their defaults.
+Creates a new :ref:`TransactionOptions <gel-dart-TransactionOptions>` with all options set to their defaults.

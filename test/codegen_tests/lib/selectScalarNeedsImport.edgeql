@@ -1,1 +1,1 @@
-select b'Hello EdgeDB'
+select b'Hello Gel'

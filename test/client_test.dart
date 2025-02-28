@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:edgedb/edgedb.dart';
+import 'package:gel/gel.dart';
 import 'package:test/test.dart';
 
 import 'testbase.dart';
@@ -278,7 +278,7 @@ void main() {
 
   test("fetch: tuples in args",
       skip: getServerVersion() < ServerVersion(3, 0)
-          ? 'tuple args only supported in EdgeDB >= 3.0'
+          ? 'tuple args only supported in Gel >= 3.0'
           : null, () async {
     final client = getClient();
     try {
@@ -556,7 +556,7 @@ void main() {
               (e) => e.message,
               'message',
               contains(
-                  'a Map<String, dynamic> or EdgeDBNamedTuple was expected, got "List<Object>"'))));
+                  'a Map<String, dynamic> or GelNamedTuple was expected, got "List<Object>"'))));
 
       await expectLater(
           client.query(r'select <tuple<str, int64>>$test', {
@@ -566,7 +566,7 @@ void main() {
               (e) => e.message,
               'message',
               contains(
-                  'a List or EdgeDBTuple was expected, got "_Map<String, Object>"'))));
+                  'a List or GelTuple was expected, got "_Map<String, Object>"'))));
 
       await expectLater(
           client.query(r'select <tuple<a: str, b: int64>>$test', {
@@ -818,7 +818,7 @@ void main() {
 
   test("fetch: multirange",
       skip: getServerVersion() < ServerVersion(4, 0)
-          ? 'multiranges only supported in EdgeDB >= 4.0'
+          ? 'multiranges only supported in Gel >= 4.0'
           : null, () async {
     final samples = [
       {'in': MultiRange([])},
@@ -1150,7 +1150,7 @@ void main() {
       // A 100mb string.
       await expectLater(
           client.querySingle("select str_repeat('aa', <int64>(10^8));"),
-          throwsA(isA<EdgeDBError>().having(
+          throwsA(isA<GelError>().having(
               (e) => e.message, 'message', contains('message too big'))));
     } finally {
       await client.close();
@@ -1159,7 +1159,7 @@ void main() {
 
   test("fetch: pgvector",
       skip: getServerVersion() < ServerVersion(3, 0)
-          ? 'pgvector only supported in EdgeDB >= 3.0'
+          ? 'pgvector only supported in Gel >= 3.0'
           : null, () async {
     final client = getClient();
 
@@ -1301,7 +1301,7 @@ void main() {
         // attempt rollback
       }
     }),
-        throwsA(isA<EdgeDBError>().having((e) => e.message, 'message',
+        throwsA(isA<GelError>().having((e) => e.message, 'message',
             contains('current transaction is aborted'))));
 
     expect(await client.querySingle('select "success"'), 'success');
@@ -1443,7 +1443,7 @@ void main() {
     try {
       await expectLater(
           client.querySingle("select <decimal>1"),
-          throwsA(isA<EdgeDBError>().having((e) => e.message, 'message',
+          throwsA(isA<GelError>().having((e) => e.message, 'message',
               contains('no Dart codec for std::decimal'))));
 
       expect(await client.querySingle("select 123"), 123);

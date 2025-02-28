@@ -1,4 +1,4 @@
-import 'package:edgedb/edgedb.dart';
+import 'package:gel/gel.dart';
 
 import 'complexParams.edgeql.dart';
 

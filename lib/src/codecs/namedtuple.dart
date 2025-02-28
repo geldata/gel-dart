@@ -1,7 +1,7 @@
 /*!
- * This source file is part of the EdgeDB open source project.
+ * This source file is part of the Gel open source project.
  *
- * Copyright 2019-present MagicStack Inc. and the EdgeDB authors.
+ * Copyright 2019-present MagicStack Inc. and the Gel authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import '../primitives/buffer.dart';
 import '../utils/indent.dart';
 import 'codecs.dart';
 
-abstract class EdgeDBNamedTuple {
+abstract class GelNamedTuple {
   Map<String, dynamic> toMap();
 }
 
@@ -47,12 +47,12 @@ class NamedTupleCodec extends Codec {
 
   @override
   void encode(WriteBuffer buf, dynamic object) {
-    if (object is! Map<String, dynamic> && object is! EdgeDBNamedTuple) {
+    if (object is! Map<String, dynamic> && object is! GelNamedTuple) {
       throw InvalidArgumentError(
-          'a Map<String, dynamic> or EdgeDBNamedTuple was expected, got "${object.runtimeType}"');
+          'a Map<String, dynamic> or GelNamedTuple was expected, got "${object.runtimeType}"');
     }
 
-    final els = object is EdgeDBNamedTuple
+    final els = object is GelNamedTuple
         ? object.toMap()
         : object as Map<String, dynamic>;
 

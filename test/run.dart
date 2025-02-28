@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:edgedb/edgedb.dart';
+import 'package:gel/gel.dart';
 import 'package:path/path.dart';
 
 void main(List<String> testArgs) async {
-  print('Starting EdgeDB test cluster...');
+  print('Starting Gel test cluster...');
 
   final statusFile = await generateStatusFileName('dart');
   print('Dart status file: ${statusFile.path}');
@@ -16,7 +16,7 @@ void main(List<String> testArgs) async {
 
   final server = await startServer(args, statusFile);
 
-  print('EdgeDB test cluster is up [port: ${server.config.port}]...');
+  print('Gel test cluster is up [port: ${server.config.port}]...');
 
   final adminConn = await setupServer(server.config);
 
@@ -27,8 +27,8 @@ void main(List<String> testArgs) async {
     if (Platform.environment['GITHUB_ACTIONS'] != 'true') '--reporter=expanded',
     ...testArgs
   ], environment: {
-    '_DART_EDGEDB_CONNECT_CONFIG': jsonEncode(server.config),
-    '_DART_EDGEDB_VERSION': jsonEncode([version['major'], version['minor']])
+    '_DART_GEL_CONNECT_CONFIG': jsonEncode(server.config),
+    '_DART_GEL_VERSION': jsonEncode([version['major'], version['minor']])
   });
 
   testProc.stdout.listen((event) => stdout.add(event));
@@ -36,12 +36,12 @@ void main(List<String> testArgs) async {
 
   exitCode = await testProc.exitCode;
 
-  print('Shutting down EdgeDB test cluster...');
+  print('Shutting down Gel test cluster...');
 
   try {
     await shutdown(server.process, adminConn);
   } finally {
-    print('...EdgeDB test cluster is down');
+    print('...Gel test cluster is down');
   }
 
   File(statusFile.path).delete().ignore();
@@ -53,7 +53,7 @@ String generateTempId() {
 
 Future<File> generateStatusFileName(String tag) async {
   final dir =
-      Directory(join(Directory.systemTemp.path, 'edgedb-dart-status-file'));
+      Directory(join(Directory.systemTemp.path, 'gel-dart-status-file'));
   await dir.create(recursive: true);
   return File(join(dir.path, '$tag-${generateTempId()}'));
 }
@@ -68,9 +68,9 @@ String getWSLPath(String wslPath) {
 }
 
 List<String> getServerCommand(String statusFile) {
-  var args = [Platform.environment['EDGEDB_SERVER_BIN'] ?? 'edgedb-server'];
+  var args = [Platform.environment['GEL_SERVER_BIN'] ?? 'edgedb-server'];
   if (Platform.isWindows) {
-    args = ['wsl', '-u', 'edgedb', ...args];
+    args = ['wsl', '-u', 'gel', ...args];
   }
 
   print(Process.runSync(args[0], [...args.sublist(1), '--version']).stdout);
@@ -98,7 +98,7 @@ List<String> getServerCommand(String statusFile) {
     '--port=auto',
     '--emit-server-status=$statusFile',
     '--security=strict',
-    '--bootstrap-command=ALTER ROLE edgedb { SET password := "edgedbtest" }',
+    '--bootstrap-command=ALTER ROLE edgedb { SET password := "geltest" }',
   ]);
 
   return args;
@@ -112,13 +112,13 @@ class ServerInst {
 
 Future<ServerInst> startServer(List<String> cmd, File statusFile) async {
   final proc = await Process.start(cmd[0], cmd.sublist(1),
-      environment: Platform.environment.containsKey('EDGEDB_SERVER_BIN') ||
+      environment: Platform.environment.containsKey('GEL_SERVER_BIN') ||
               Platform.environment.containsKey('CI')
           ? {}
           : {'__EDGEDB_DEVMODE': '1'},
       includeParentEnvironment: true);
 
-  if (Platform.environment['EDGEDB_DEBUG_SERVER'] != null) {
+  if (Platform.environment['GEL_DEBUG_SERVER'] != null) {
     print('starting server: ${cmd.join(' ')}');
     proc.stdout.listen((event) => stdout.add(event));
     proc.stderr.listen((event) => stderr.add(event));
@@ -137,13 +137,8 @@ Future<ServerInst> startServer(List<String> cmd, File statusFile) async {
   if (Platform.isWindows && runtimeData['tls_cert_file'] != null) {
     final tmpFile =
         join(Directory.systemTemp.path, 'edbtlscert-${generateTempId()}.pem');
-    await Process.run('wsl', [
-      '-u',
-      'edgedb',
-      'cp',
-      runtimeData['tls_cert_file'],
-      getWSLPath(tmpFile)
-    ]);
+    await Process.run('wsl',
+        ['-u', 'gel', 'cp', runtimeData['tls_cert_file'], getWSLPath(tmpFile)]);
     runtimeData['tls_cert_file'] = tmpFile;
   }
 
@@ -151,7 +146,7 @@ Future<ServerInst> startServer(List<String> cmd, File statusFile) async {
       host: 'localhost',
       port: runtimeData['port'],
       user: 'edgedb',
-      password: 'edgedbtest',
+      password: 'geltest',
       tlsSecurity: TLSSecurity.noHostVerification,
       tlsCAFile: runtimeData['tls_cert_file']);
 
@@ -207,7 +202,7 @@ Future<void> shutdown(Process proc, Client adminConn) async {
 
   final timeout = Timer(Duration(seconds: 30), () {
     proc.kill();
-    print('!!! EdgeDB exit timeout... !!!');
+    print('!!! Gel exit timeout... !!!');
   });
 
   final code = await proc.exitCode;
@@ -215,6 +210,6 @@ Future<void> shutdown(Process proc, Client adminConn) async {
   timeout.cancel();
 
   if (code != 0) {
-    print('EdgeDB server did not shutdown gracefully');
+    print('Gel server did not shutdown gracefully');
   }
 }

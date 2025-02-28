@@ -1,7 +1,7 @@
 /*!
- * This source file is part of the EdgeDB open source project.
+ * This source file is part of the Gel open source project.
  *
- * Copyright 2019-present MagicStack Inc. and the EdgeDB authors.
+ * Copyright 2019-present MagicStack Inc. and the Gel authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ class ConfigMemoryCodec extends ScalarCodec {
   final returnType = 'ConfigMemory';
   @override
   // ignore: overridden_fields
-  final returnTypeImport = 'package:edgedb/edgedb.dart';
+  final returnTypeImport = 'package:gel/gel.dart';
 
   @override
   void encode(WriteBuffer buf, dynamic object) {

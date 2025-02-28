@@ -1,7 +1,7 @@
 /*!
- * This source file is part of the EdgeDB open source project.
+ * This source file is part of the Gel open source project.
  *
- * Copyright 2020-present MagicStack Inc. and the EdgeDB authors.
+ * Copyright 2020-present MagicStack Inc. and the Gel authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -120,14 +120,14 @@ class ClientConnectionHolder<Connection extends BaseProtocol> {
             await transaction._rollback();
           }
         } catch (rollbackErr) {
-          if (rollbackErr is! EdgeDBError) {
-            // We ignore EdgeDBError errors on rollback, retrying
+          if (rollbackErr is! GelError) {
+            // We ignore GelError errors on rollback, retrying
             // if possible. All other errors are propagated.
             rethrow;
           }
         }
-        if (err is EdgeDBError &&
-            err.hasTag(EdgeDBErrorTag.shouldRetry) &&
+        if (err is GelError &&
+            err.hasTag(GelErrorTag.shouldRetry) &&
             !(commitFailed && err is ClientConnectionError)) {
           final rule = getRuleForException(options.retryOptions, err);
           if (iteration + 1 >= rule.attempts) {
@@ -166,8 +166,8 @@ class ClientConnectionHolder<Connection extends BaseProtocol> {
             outCodec: outCodec,
             state: options.session);
       } catch (err) {
-        if (err is EdgeDBError &&
-            err.hasTag(EdgeDBErrorTag.shouldRetry) &&
+        if (err is GelError &&
+            err.hasTag(GelErrorTag.shouldRetry) &&
             (
                 // query is readonly or it's a transaction serialization error
                 err is TransactionConflictError ||
@@ -446,32 +446,32 @@ class ClientPool<Connection extends BaseProtocol> {
 abstract class Executor {
   /// Executes a query, returning no result.
   ///
-  /// For details on [args] see the `edgedb` library
-  /// [docs page](../edgedb-library.html).
+  /// For details on [args] see the `gel` library
+  /// [docs page](../gel).
   Future<void> execute(String query, [dynamic args]);
 
   /// Executes a SQL query, returning no result.
   ///
-  /// For details on [args] see the `edgedb` library
-  /// [docs page](../edgedb-library.html).
+  /// For details on [args] see the `gel` library
+  /// [docs page](../gel).
   Future<void> executeSQL(String query, [dynamic args]);
 
   /// Executes a query, returning a `List` of results.
   ///
-  /// For details on result types and [args] see the `edgedb` library
-  /// [docs page](../edgedb-library.html).
+  /// For details on result types and [args] see the `gel` library
+  /// [docs page](../gel).
   Future<List<dynamic>> query(String query, [dynamic args]);
 
   /// Executes a SQL query, returning a `List` of results.
   ///
-  /// For details on result types and [args] see the `edgedb` library
-  /// [docs page](../edgedb-library.html).
+  /// For details on result types and [args] see the `gel` library
+  /// [docs page](../gel).
   Future<List<dynamic>> querySQL(String query, [dynamic args]);
 
   /// Executes a query, returning the result as a JSON encoded `String`.
   ///
-  /// For details on [args] see the `edgedb` library
-  /// [docs page](../edgedb-library.html).
+  /// For details on [args] see the `gel` library
+  /// [docs page](../gel).
   Future<String> queryJSON(String query, [dynamic args]);
 
   /// Executes a query, returning a single (possibly `null`) result.
@@ -479,8 +479,8 @@ abstract class Executor {
   /// The query must return no more than one element. If the query returns
   /// more than one element, a [ResultCardinalityMismatchError] error is thrown.
   ///
-  /// For details on result types and [args] see the `edgedb` library
-  /// [docs page](../edgedb-library.html).
+  /// For details on result types and [args] see the `gel` library
+  /// [docs page](../gel).
   Future<dynamic> querySingle(String query, [dynamic args]);
 
   /// Executes a query, returning the result as a JSON encoded `String`.
@@ -488,8 +488,8 @@ abstract class Executor {
   /// The query must return no more than one element. If the query returns
   /// more than one element, a [ResultCardinalityMismatchError] error is thrown.
   ///
-  /// For details on [args] see the `edgedb` library
-  /// [docs page](../edgedb-library.html).
+  /// For details on [args] see the `gel` library
+  /// [docs page](../gel).
   Future<String> querySingleJSON(String query, [dynamic args]);
 
   /// Executes a query, returning a single (non-`null`) result.
@@ -498,8 +498,8 @@ abstract class Executor {
   /// than one element, a [ResultCardinalityMismatchError] error is thrown.
   /// If the query returns an empty set, a [NoDataError] error is thrown.
   ///
-  /// For details on result types and [args] see the `edgedb` library
-  /// [docs page](../edgedb-library.html).
+  /// For details on result types and [args] see the `gel` library
+  /// [docs page](../gel).
   Future<dynamic> queryRequiredSingle(String query, [dynamic args]);
 
   /// Executes a query, returning the result as a JSON encoded `String`.
@@ -508,8 +508,8 @@ abstract class Executor {
   /// than one element, a [ResultCardinalityMismatchError] error is thrown.
   /// If the query returns an empty set, a [NoDataError] error is thrown.
   ///
-  /// For details on [args] see the `edgedb` library
-  /// [docs page](../edgedb-library.html).
+  /// For details on [args] see the `gel` library
+  /// [docs page](../gel).
   Future<String> queryRequiredSingleJSON(String query, [dynamic args]);
 
   Future<dynamic> _executeWithCodec<T>(String methodName, Codec outCodec,
@@ -602,7 +602,7 @@ class Client implements Executor {
   ///
   /// Equivalent to using the `configure session` command. For available
   /// configuration parameters refer to the
-  /// [Config documentation](https://www.edgedb.com/docs/stdlib/cfg#client-connections).
+  /// [Config documentation](https://docs.geldata.com/reference/stdlib/cfg#client-connections).
   ///
   Client withConfig(Map<String, Object> config) {
     return Client._create(
@@ -823,9 +823,9 @@ class Client implements Executor {
 /// Creates a new [Client] instance with the provided connection options.
 ///
 /// Usually it's recommended to not pass any connection options here, and
-/// instead let the client resolve the connection options from the edgedb
+/// instead let the client resolve the connection options from the Gel
 /// project or environment variables. See the
-/// [Client Library Connection](https://www.edgedb.com/docs/reference/connection)
+/// [Client Library Connection](https://docs.geldata.com/reference/reference/connection)
 /// documentation for details on connection options and how they are
 /// resolved.
 ///

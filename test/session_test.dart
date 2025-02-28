@@ -1,4 +1,4 @@
-import 'package:edgedb/src/errors/errors.dart';
+import 'package:gel/src/errors/errors.dart';
 import 'package:test/test.dart';
 
 import 'testbase.dart';

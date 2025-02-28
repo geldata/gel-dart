@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
-import 'package:edgedb/src/connect_config.dart';
-import 'package:edgedb/src/errors/base.dart';
-import 'package:edgedb/src/platform.dart';
-import 'package:edgedb/src/utils/env.dart';
-import 'package:edgedb/src/utils/parse_duration.dart';
+import 'package:gel/src/connect_config.dart';
+import 'package:gel/src/errors/base.dart';
+import 'package:gel/src/platform.dart';
+import 'package:gel/src/utils/env.dart';
+import 'package:gel/src/utils/parse_duration.dart';
 import 'package:path/path.dart';
 import 'package:test/test.dart';
 
@@ -67,7 +67,7 @@ ${exceptions.entries.map((e) => '--- ${e.key} ---\n${e.value}').join('\n\n')}'''
     }
   });
 
-  test("EDGEDB_CLIENT_SECURITY env var", () async {
+  test("GEL_CLIENT_SECURITY env var", () async {
     final truthTable = [
       // CLIENT_SECURITY, CLIENT_TLS_SECURITY, result
       ["default", TLSSecurity.defaultSecurity, TLSSecurity.defaultSecurity],
@@ -93,7 +93,7 @@ ${exceptions.entries.map((e) => '--- ${e.key} ---\n${e.value}').join('\n\n')}'''
     ];
 
     for (var item in truthTable) {
-      await runWithEnv(env: {'EDGEDB_CLIENT_SECURITY': item[0] as String},
+      await runWithEnv(env: {'GEL_CLIENT_SECURITY': item[0] as String},
           () async {
         final parseConnectArgs = parseConnectConfig(ConnectConfig(
             host: 'localhost', tlsSecurity: item[1] as TLSSecurity));
@@ -109,10 +109,10 @@ ${exceptions.entries.map((e) => '--- ${e.key} ---\n${e.value}').join('\n\n')}'''
 
 final errorMapping = {
   'credentials_file_not_found': RegExp(r"^cannot read credentials file"),
-  'project_not_initialised':
-      RegExp(r"^Found 'edgedb\.toml' but the project is not initialized"),
+  'project_not_initialised': RegExp(
+      r"^Found 'gel\.toml' \(or 'edgedb\.toml'\) but the project is not initialized"),
   'no_options_or_toml': RegExp(
-      r"^no 'edgedb\.toml' found and no connection options specified either"),
+      r"^no 'gel\.toml' \(or 'edgedb\.toml'\) found and no connection options specified either"),
   'invalid_credentials_file': RegExp(r"^cannot read credentials file"),
   'invalid_dsn_or_instance_name': RegExp(r"^invalid DSN or instance name"),
   'invalid_dsn': RegExp(r"^invalid DSN"),
@@ -129,7 +129,7 @@ final errorMapping = {
   'env_not_found': RegExp(r"environment variable '.*' doesn't exist"),
   'file_not_found': RegExp(r"cannot open file"),
   'invalid_tls_security': RegExp(
-      r"^invalid 'tlsSecurity' value|'tlsSecurity' value cannot be lower than security level set by EDGEDB_CLIENT_SECURITY"),
+      r"^invalid 'tlsSecurity' value|'tlsSecurity' value cannot be lower than security level set by (GEL|EDGEDB)_CLIENT_SECURITY"),
   'exclusive_options':
       RegExp(r"^Cannot specify both .* and .*|are mutually exclusive"),
   'secret_key_not_found':
@@ -189,7 +189,7 @@ Future<void> runConnectionTest(Map<String, dynamic> testcase) async {
             cwd: fs?['cwd'] as String?,
             files: fs?['files'] != null ? Map.castFrom(fs?['files']) : null,
             () => parseConnectConfig(config)),
-        throwsA(isA<EdgeDBError>()
+        throwsA(isA<GelError>()
             .having((e) => e.message, 'message', matches(error))));
   } else {
     await runWithEnv(

@@ -1,46 +1,46 @@
-# Dart client library for EdgeDB
+# Dart client library for Gel
 
-This is the official [EdgeDB](https://github.com/edgedb/edgedb) client library
+This is the official [Gel](https://github.com/geldata/gel) (formerly EdgeDB) client library
 for Dart.
 
-If you're just getting started with EdgeDB, we recommend going through the
-[EdgeDB Quickstart](https://www.edgedb.com/docs/quickstart) first. This walks
-you through the process of installing EdgeDB, creating a simple schema, and
+If you're just getting started with Gel, we recommend going through the
+[Gel Quickstart](https://www.geldata.com/p/quickstart-docs) first. This walks
+you through the process of installing Gel, creating a simple schema, and
 writing some simple queries.
 
-> Note: Only EdgeDB version >=2.0 is supported by this library.
+> Note: Only Gel version >=2.0 is supported by this library.
 
 ## Installing
 
-Add `edgedb` to the dependencies in your `pubspec.yaml` file:
+Add `gel` to the dependencies in your `pubspec.yaml` file:
 
 ```sh
-dart pub add edgedb
+dart pub add gel
 ```
 
-This package contains both the core `edgedb` library, which exports all the
-API's needed to connect to an EdgeDB server and run queries, along with the
+This package contains both the core `gel` library, which exports all the
+API's needed to connect to a Gel server and run queries, along with the
 `edgeql-codegen` library, which provides a builder for Dart's
 [build_runner](https://dart.dev/tools/build_runner) to generate fully
 typed query methods from `.edgeql` files.
 
 ## Basic Usage
 
-First you'll need to have EdgeDB installed, and to have created an instance for
-your project; we recommend the [Quickstart guide](https://www.edgedb.com/docs/quickstart)
+First you'll need to have Gel installed, and to have created an instance for
+your project; we recommend the [Quickstart guide](https://www.geldata.com/p/quickstart-docs)
 for a overview on how to do this.
 
-Then import the `edgedb` library, and create a new client with `createClient()`.
+Then import the `gel` library, and create a new client with `createClient()`.
 
 ```dart
-import 'package:edgedb/edgedb.dart';
+import 'package:gel/gel.dart';
 
 final client = createClient();
 ```
 
 In most cases `createClient()` needs no arguments; the library will determine
-how to connect to your instance automatically if you're either: using an
-EdgeDB project, as recommended for development, or providing connection
+how to connect to your instance automatically if you're either: using a
+Gel project, as recommended for development, or providing connection
 options via environment variables, as recommended for production use. For
 more advanced use cases refer to the `createClient()` api docs, for the full
 list of connection options you can provide.
@@ -111,11 +111,11 @@ in your `dbschema/migrations` directory.
 
 ## Contributing
 
-Development of this library requires a local installation of EdgeDB to run
-the test suite. (You'll need the `edgedb-server` binary in your `PATH`).
+Development of this library requires a local installation of Gel to run
+the test suite. (You'll need the `gel-server` binary in your `PATH`).
 This can be done either following these
-[install instructions](https://www.edgedb.com/install#linux-debianubuntults)
-or [building from source](https://www.edgedb.com/docs/guides/contributing).
+[install instructions](https://www.geldata.com/install#linux-debianubuntults)
+or [building from source](https://docs.geldata.com/resources/guides/contributing/code#building-locally).
 
 To run tests use the command:
 
@@ -124,8 +124,8 @@ dart run test/run.dart
 ```
 
 This is a wrapper around the `dart test` tool which handles starting/shutting
-down an EdgeDB server instance required by the tests.
+down a Gel server instance required by the tests.
 
 ## License
 
-edgedb-dart is developed and distributed under the Apache 2.0 license.
+gel-dart is developed and distributed under the Apache 2.0 license.

@@ -3,21 +3,21 @@
 
 import 'base.dart';
 
-export 'base.dart' show EdgeDBError, EdgeDBErrorTag;
+export 'base.dart' show GelError, GelErrorTag;
 
-class InternalServerError extends EdgeDBError {
+class InternalServerError extends GelError {
   InternalServerError(super.message, [super.source]);
 
   final code = 0x01000000;
 }
 
-class UnsupportedFeatureError extends EdgeDBError {
+class UnsupportedFeatureError extends GelError {
   UnsupportedFeatureError(super.message, [super.source]);
 
   final code = 0x02000000;
 }
 
-class ProtocolError extends EdgeDBError {
+class ProtocolError extends GelError {
   ProtocolError(super.message, [super.source]);
 
   final code = 0x03000000;
@@ -72,7 +72,7 @@ class StateMismatchError extends InputDataError {
   final code = 0x03020200;
 
   @override
-  final tags = {EdgeDBErrorTag.shouldRetry};
+  final tags = {GelErrorTag.shouldRetry};
 }
 
 class ResultCardinalityMismatchError extends ProtocolError {
@@ -103,7 +103,7 @@ class DisabledCapabilityError extends CapabilityError {
   final code = 0x03040200;
 }
 
-class QueryError extends EdgeDBError {
+class QueryError extends GelError {
   QueryError(super.message, [super.source]);
 
   final code = 0x04000000;
@@ -410,7 +410,7 @@ class IdleSessionTimeoutError extends SessionTimeoutError {
   final code = 0x04060100;
 
   @override
-  final tags = {EdgeDBErrorTag.shouldRetry};
+  final tags = {GelErrorTag.shouldRetry};
 }
 
 class QueryTimeoutError extends SessionTimeoutError {
@@ -434,7 +434,7 @@ class IdleTransactionTimeoutError extends TransactionTimeoutError {
   final code = 0x04060a01;
 }
 
-class ExecutionError extends EdgeDBError {
+class ExecutionError extends GelError {
   ExecutionError(super.message, [super.source]);
 
   final code = 0x05000000;
@@ -517,7 +517,7 @@ class TransactionConflictError extends TransactionError {
   final code = 0x05030100;
 
   @override
-  final tags = {EdgeDBErrorTag.shouldRetry};
+  final tags = {GelErrorTag.shouldRetry};
 }
 
 class TransactionSerializationError extends TransactionConflictError {
@@ -527,7 +527,7 @@ class TransactionSerializationError extends TransactionConflictError {
   final code = 0x05030101;
 
   @override
-  final tags = {EdgeDBErrorTag.shouldRetry};
+  final tags = {GelErrorTag.shouldRetry};
 }
 
 class TransactionDeadlockError extends TransactionConflictError {
@@ -537,7 +537,7 @@ class TransactionDeadlockError extends TransactionConflictError {
   final code = 0x05030102;
 
   @override
-  final tags = {EdgeDBErrorTag.shouldRetry};
+  final tags = {GelErrorTag.shouldRetry};
 }
 
 class WatchError extends ExecutionError {
@@ -547,13 +547,13 @@ class WatchError extends ExecutionError {
   final code = 0x05040000;
 }
 
-class ConfigurationError extends EdgeDBError {
+class ConfigurationError extends GelError {
   ConfigurationError(super.message, [super.source]);
 
   final code = 0x06000000;
 }
 
-class AccessError extends EdgeDBError {
+class AccessError extends GelError {
   AccessError(super.message, [super.source]);
 
   final code = 0x07000000;
@@ -566,7 +566,7 @@ class AuthenticationError extends AccessError {
   final code = 0x07010000;
 }
 
-class AvailabilityError extends EdgeDBError {
+class AvailabilityError extends GelError {
   AvailabilityError(super.message, [super.source]);
 
   final code = 0x08000000;
@@ -579,7 +579,7 @@ class BackendUnavailableError extends AvailabilityError {
   final code = 0x08000001;
 
   @override
-  final tags = {EdgeDBErrorTag.shouldRetry};
+  final tags = {GelErrorTag.shouldRetry};
 }
 
 class ServerOfflineError extends AvailabilityError {
@@ -589,7 +589,7 @@ class ServerOfflineError extends AvailabilityError {
   final code = 0x08000002;
 
   @override
-  final tags = {EdgeDBErrorTag.shouldReconnect, EdgeDBErrorTag.shouldRetry};
+  final tags = {GelErrorTag.shouldReconnect, GelErrorTag.shouldRetry};
 }
 
 class UnknownTenantError extends AvailabilityError {
@@ -599,7 +599,7 @@ class UnknownTenantError extends AvailabilityError {
   final code = 0x08000003;
 
   @override
-  final tags = {EdgeDBErrorTag.shouldReconnect, EdgeDBErrorTag.shouldRetry};
+  final tags = {GelErrorTag.shouldReconnect, GelErrorTag.shouldRetry};
 }
 
 class ServerBlockedError extends AvailabilityError {
@@ -609,7 +609,7 @@ class ServerBlockedError extends AvailabilityError {
   final code = 0x08000004;
 }
 
-class BackendError extends EdgeDBError {
+class BackendError extends GelError {
   BackendError(super.message, [super.source]);
 
   final code = 0x09000000;
@@ -622,7 +622,7 @@ class UnsupportedBackendFeatureError extends BackendError {
   final code = 0x09000100;
 }
 
-class LogMessage extends EdgeDBError {
+class LogMessage extends GelError {
   LogMessage(super.message, [super.source]);
 
   final code = 0xf0000000;
@@ -635,7 +635,7 @@ class WarningMessage extends LogMessage {
   final code = 0xf0010000;
 }
 
-class ClientError extends EdgeDBError {
+class ClientError extends GelError {
   ClientError(super.message, [super.source]);
 
   final code = 0xff000000;
@@ -663,7 +663,7 @@ class ClientConnectionFailedTemporarilyError
   final code = 0xff010101;
 
   @override
-  final tags = {EdgeDBErrorTag.shouldReconnect, EdgeDBErrorTag.shouldRetry};
+  final tags = {GelErrorTag.shouldReconnect, GelErrorTag.shouldRetry};
 }
 
 class ClientConnectionTimeoutError extends ClientConnectionError {
@@ -673,7 +673,7 @@ class ClientConnectionTimeoutError extends ClientConnectionError {
   final code = 0xff010200;
 
   @override
-  final tags = {EdgeDBErrorTag.shouldReconnect, EdgeDBErrorTag.shouldRetry};
+  final tags = {GelErrorTag.shouldReconnect, GelErrorTag.shouldRetry};
 }
 
 class ClientConnectionClosedError extends ClientConnectionError {
@@ -683,7 +683,7 @@ class ClientConnectionClosedError extends ClientConnectionError {
   final code = 0xff010300;
 
   @override
-  final tags = {EdgeDBErrorTag.shouldReconnect, EdgeDBErrorTag.shouldRetry};
+  final tags = {GelErrorTag.shouldReconnect, GelErrorTag.shouldRetry};
 }
 
 class InterfaceError extends ClientError {

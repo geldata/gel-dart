@@ -26,7 +26,7 @@ Future<Connection> retryingConnect<Connection extends BaseProtocol>(
             'Connection attempt failed with the following config:\n${config.explainConfig()}');
       }
       if (timeout.elapsedMilliseconds < waitMilliseconds &&
-          e.hasTag(EdgeDBErrorTag.shouldReconnect)) {
+          e.hasTag(GelErrorTag.shouldReconnect)) {
         if (logAttempts &&
             (lastLoggingAt == null ||
                 timeout.elapsedMilliseconds - lastLoggingAt > 10000)) {

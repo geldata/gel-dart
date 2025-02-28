@@ -1,7 +1,7 @@
 /*!
- * This source file is part of the EdgeDB open source project.
+ * This source file is part of the Gel open source project.
  *
- * Copyright 2019-present MagicStack Inc. and the EdgeDB authors.
+ * Copyright 2019-present MagicStack Inc. and the Gel authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@ class LocalDateTimeCodec extends ScalarCodec {
   final returnType = 'LocalDateTime';
   @override
   // ignore: overridden_fields
-  final returnTypeImport = 'package:edgedb/edgedb.dart';
+  final returnTypeImport = 'package:gel/gel.dart';
 
   @override
   void encode(WriteBuffer buf, dynamic object) {
@@ -85,7 +85,7 @@ class LocalDateCodec extends ScalarCodec {
   final returnType = 'LocalDate';
   @override
   // ignore: overridden_fields
-  final returnTypeImport = 'package:edgedb/edgedb.dart';
+  final returnTypeImport = 'package:gel/gel.dart';
 
   @override
   void encode(WriteBuffer buf, dynamic object) {
@@ -114,7 +114,7 @@ class LocalTimeCodec extends ScalarCodec {
   final returnType = 'LocalTime';
   @override
   // ignore: overridden_fields
-  final returnTypeImport = 'package:edgedb/edgedb.dart';
+  final returnTypeImport = 'package:gel/gel.dart';
 
   @override
   void encode(WriteBuffer buf, dynamic object) {
@@ -172,7 +172,7 @@ class RelativeDurationCodec extends ScalarCodec {
   final returnType = 'RelativeDuration';
   @override
   // ignore: overridden_fields
-  final returnTypeImport = 'package:edgedb/edgedb.dart';
+  final returnTypeImport = 'package:gel/gel.dart';
 
   @override
   void encode(WriteBuffer buf, dynamic object) {
@@ -205,7 +205,7 @@ class DateDurationCodec extends ScalarCodec {
   final returnType = 'DateDuration';
   @override
   // ignore: overridden_fields
-  final returnTypeImport = 'package:edgedb/edgedb.dart';
+  final returnTypeImport = 'package:gel/gel.dart';
 
   @override
   void encode(WriteBuffer buf, dynamic object) {

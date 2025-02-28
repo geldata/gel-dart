@@ -190,7 +190,7 @@ class CodecsRegistry {
               return null;
             } else {
               throw InternalClientError(
-                  'no codec implementation for EdgeDB data class $t');
+                  'no codec implementation for Gel data class $t');
             }
           }
       }
@@ -544,8 +544,7 @@ class CodecsRegistry {
 
       default:
         {
-          throw ProtocolError(
-              'no codec implementation for EdgeDB data class $t');
+          throw ProtocolError('no codec implementation for Gel data class $t');
         }
     }
 
