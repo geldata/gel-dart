@@ -114,8 +114,8 @@ in your `dbschema/migrations` directory.
 Development of this library requires a local installation of Gel to run
 the test suite. (You'll need the `gel-server` binary in your `PATH`).
 This can be done either following these
-[install instructions](https://www.geldata.com/install#linux-debianubuntults)
-or [building from source](https://docs.geldata.com/resources/guides/contributing/code#building-locally).
+[install instructions](https://docs.geldata.com/learn/cli)
+or [building from source](https://docs.geldata.com/resources/guides/contributing/code).
 
 To run tests use the command:
 
